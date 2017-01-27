@@ -1,5 +1,7 @@
 package org.metrobots.subsystems;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-	public static Talon flMotor, blMotor, frMotor, brMotor;
+	public static CANTalon flMotor, blMotor, frMotor, brMotor;
 	
 	public RobotDrive robotDrive;
 	
-	public DriveTrain(Talon flMotor_, Talon blMotor_, Talon frMotor_, Talon brMotor_) {
+	public DriveTrain(CANTalon flMotor2, CANTalon blMotor2, CANTalon frMotor2, CANTalon brMotor2) {
 		
-		flMotor = flMotor_;
-		blMotor = blMotor_;
-		frMotor = frMotor_;
-		brMotor = brMotor_;
+		flMotor = flMotor2;
+		blMotor = blMotor2;
+		frMotor = frMotor2;
+		brMotor = brMotor2;
 		
 		robotDrive = new RobotDrive(flMotor, blMotor, frMotor, brMotor);
 		

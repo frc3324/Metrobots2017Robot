@@ -6,5 +6,6 @@ public class Constants {
 	final static int blMotorPort = 1;
 	final static int frMotorPort = 2;
 	final static int brMotorPort = 3;
+	final static int intakeMotorPort = 4;
 	
 }

@@ -1,10 +1,15 @@
 
 package org.metrobots;
 
-import org.metrobots.commands.Drive;
+import org.metrobots.commands.DriveGroup;
 import org.metrobots.subsystems.DriveTrain;
+import org.metrobots.subsystems.Intake;
+
+import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -25,24 +30,32 @@ public class Robot extends IterativeRobot {
 	
 	
 	public static MetroXboxController cont1;
-	public Talon flMotor;
-	public Talon blMotor;
-	public Talon frMotor;
-	public Talon brMotor;
+	public CANTalon flMotor;
+	public CANTalon blMotor;
+	public CANTalon frMotor;
+	public CANTalon brMotor;
+	public Talon intakeMotor;
+	
+	public static AHRS navx;
 	
 	public static DriveTrain driveTrain;
+	public static Intake intake;
 	
 	
     public void robotInit() {
     
     	cont1 = new MetroXboxController(0);
-    	flMotor = new Talon(Constants.flMotorPort);
-    	blMotor = new Talon(Constants.blMotorPort);
-    	frMotor = new Talon(Constants.frMotorPort);
-    	brMotor = new Talon(Constants.brMotorPort);
+    	flMotor = new CANTalon(Constants.flMotorPort);
+    	blMotor = new CANTalon(Constants.blMotorPort);
+    	frMotor = new CANTalon(Constants.frMotorPort);
+    	brMotor = new CANTalon(Constants.brMotorPort);
+    	
+    	navx = new AHRS(SPI.Port.kMXP);
+    	
+    	intakeMotor = new Talon(Constants.intakeMotorPort);
     	
     	driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor);
-    	
+    	intake = new Intake(intakeMotor);
     }
 	
 	/**
@@ -80,7 +93,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	
-    	Scheduler.getInstance().add(new Drive());
+    	Scheduler.getInstance().add(new DriveGroup());
     	
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
