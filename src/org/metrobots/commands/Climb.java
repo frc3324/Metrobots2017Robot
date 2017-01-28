@@ -14,7 +14,7 @@ public class Climb extends Command{
 	}
 
 	protected void execute() {
-    	Robot.climb.climb(Robot.cont1.getButton(MetroXboxController.BUTTON_X));
+    	Robot.climb.climb(Robot.cont1.getButton(MetroXboxController.LB));
 	}	
 	
 	@Override

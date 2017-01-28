@@ -14,7 +14,7 @@ public class FuelLaunch extends Command{
 	}
 
 	protected void execute() {
-    	Robot.launch.launch(Robot.cont1.getButton(MetroXboxController.LB));
+    	Robot.launch.launch(Robot.cont1.getButton(MetroXboxController.BUTTON_X));
 	}	
 	
 	@Override
