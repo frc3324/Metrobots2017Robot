@@ -2,8 +2,11 @@
 package org.metrobots;
 
 import org.metrobots.commands.DriveGroup;
+import org.metrobots.commands.FuelLaunch;
+import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.subsystems.Intake;
+import org.metrobots.subsystems.Shooter;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -34,12 +37,16 @@ public class Robot extends IterativeRobot {
 	public CANTalon blMotor;
 	public CANTalon frMotor;
 	public CANTalon brMotor;
-	public Talon intakeMotor;
+	public CANTalon intakeMotor;
+	public CANTalon climbMotor;
+	public CANTalon launchMotor;
 	
 	public static AHRS navx;
 	
 	public static DriveTrain driveTrain;
 	public static Intake intake;
+	public static Shooter launch;
+	public static Climber climb;
 	
 	
     public void robotInit() {
@@ -49,13 +56,18 @@ public class Robot extends IterativeRobot {
     	blMotor = new CANTalon(Constants.blMotorPort);
     	frMotor = new CANTalon(Constants.frMotorPort);
     	brMotor = new CANTalon(Constants.brMotorPort);
+    	climbMotor = new CANTalon(Constants.climbMotorPort);
+    	launchMotor = new CANTalon(Constants.launchMotorPort);
     	
     	navx = new AHRS(SPI.Port.kMXP);
     	
-    	intakeMotor = new Talon(Constants.intakeMotorPort);
+    	intakeMotor = new CANTalon(Constants.intakeMotorPort);
     	
     	driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor);
     	intake = new Intake(intakeMotor);
+    	climb = new Climber(climbMotor);
+    	launch = new Shooter(launchMotor);
+    	
     }
 	
 	/**
