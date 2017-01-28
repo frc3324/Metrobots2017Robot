@@ -12,7 +12,7 @@ public class Climber extends Subsystem{
 		climb = c;
 	}
 	
-	public void launch (boolean up)
+	public void climb (boolean up)
 	{
 		if (up)
 		{
@@ -28,11 +28,8 @@ public class Climber extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public void climb(boolean button) {
-		// TODO Auto-generated method stub
 		
 	}
+
 
 }
