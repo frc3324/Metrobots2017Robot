@@ -7,7 +7,7 @@ public class Constants {
 	final static int frMotorPort = 2;
 	final static int brMotorPort = 3;
 	final static int intakeMotorPort = 4;
-	final static int climbMotorPort = 5;
-	final static int launchMotorPort = 6;
+	final static int climbMotorPort = 7;
+	final static int launchMotorPort = 5;
 	
 }

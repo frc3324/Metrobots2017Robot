@@ -3,7 +3,6 @@ package org.metrobots.subsystems;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -34,10 +33,13 @@ public class DriveTrain extends Subsystem {
 		
 	}
 	
-	public void mecanumDrive(double leftX, double leftY, double rightX){
-		robotDrive.mecanumDrive_Cartesian(leftX, leftY, rightX, 0.0);
-		
+	public void mecanumDrive(double x, double y, double turn){
+		flMotor.set(x + y + turn);
+		blMotor.set(-x + y + turn);
+		frMotor.set(x - y + turn);
+		brMotor.set(-x - y + turn);
 	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
