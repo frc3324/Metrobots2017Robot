@@ -49,3 +49,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /bin/
+/.classpath
+
+
+#Further ignore
+/build/
+/dist/
