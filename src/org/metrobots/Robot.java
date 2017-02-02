@@ -6,10 +6,12 @@ import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.subsystems.Intake;
 import org.metrobots.subsystems.Shooter;
+import org.metrobots.util.OpticalEncoder;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -38,7 +40,8 @@ public class Robot extends IterativeRobot {
 	public CANTalon intakeMotor;
 	public CANTalon climbMotor;
 	public CANTalon launchMotor;
-	
+	public AnalogInput shooterRPM;
+	public OpticalEncoder clicker;
 	public static AHRS navx;
 	
 	public static DriveTrain driveTrain;
@@ -65,6 +68,10 @@ public class Robot extends IterativeRobot {
     	intake = new Intake(intakeMotor);
     	climb = new Climber(climbMotor);
     	launch = new Shooter(launchMotor);
+    	shooterRPM = new AnalogInput(0);
+    	clicker = new OpticalEncoder(shooterRPM);
+    	
+    	
     	
     }
 	
@@ -79,6 +86,10 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("encoder: " + clicker.clicks);
+		System.out.println("lowLightLevel: " + clicker.lowLightLevel);
+		System.out.println("currentLightLevel: " + clicker.opticalEncoder.getValue());
+		clicker.setRPM();
 	}
 
 	/**
@@ -116,6 +127,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        System.out.println(clicker.clicks);
     }
     
     /**
