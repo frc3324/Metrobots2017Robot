@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class MecanumDrive extends Command {
 	
-	public boolean isFieldOriented = true;
+	public boolean isFieldOriented = false;
 
 	public MecanumDrive() {
 		requires((Subsystem)Robot.driveTrain);
@@ -26,6 +26,16 @@ public class MecanumDrive extends Command {
 		double driverY = Robot.cont1.getAxis(MetroXboxController.LEFT_Y);
 		double turn = Robot.cont1.getAxis(MetroXboxController.RIGHT_X);
 		double angle = Robot.navx.getAngle() * Math.PI / 180;
+		
+		if (Robot.cont1.getButton(MetroXboxController.BUTTON_B)) {
+			isFieldOriented = true;
+		} else if (Robot.cont1.getButton(MetroXboxController.BUTTON_A)) {
+			isFieldOriented = false;
+		}
+		
+		if (Robot.cont1.getButton(MetroXboxController.BUTTON_START)) {
+			Robot.navx.reset();
+		}
 		
 		double x = 0;
 		double y = 0;

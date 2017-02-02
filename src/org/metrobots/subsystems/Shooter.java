@@ -12,16 +12,18 @@ public class Shooter extends Subsystem{
 		launch = s;
 	}
 	
-	public void launch (boolean out)
+	public void launch (double speed)
 	{
-		if (out)
+		launch.set(speed);
+		/*if (out)
 		{
 			launch.set(1.0);
 		}
 		else
 		{
 			launch.set(0);
-		}
+		}*/
+		
 	}
 
 	@Override
