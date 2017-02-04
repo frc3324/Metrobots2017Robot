@@ -11,4 +11,6 @@ public class Constants {
 	final static int launchMotorPort = 5;
 	final static int feederMotorPort = 4;
 	
+	final static int opticalEncoderPort = 0;
+	
 }

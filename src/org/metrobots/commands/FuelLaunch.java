@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FuelLaunch extends Command{
 	
-	private double speed = 0.0;
+	private int speed = 0;
 	
 	public FuelLaunch()
 	{
@@ -18,7 +18,7 @@ public class FuelLaunch extends Command{
 	protected void execute() {
     	//Robot.launch.launch(Robot.cont1.getAxis(MetroXboxController.LT));
 		if (Robot.cont1.getButton(MetroXboxController.BUTTON_X)) {
-			speed = 0.75;
+			speed = 3100;
 		} else if (Robot.cont1.getButton(MetroXboxController.BUTTON_Y)) {
 			speed = 0;
 		}

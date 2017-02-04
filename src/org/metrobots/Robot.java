@@ -12,7 +12,11 @@ import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.AnalogTriggerOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -40,16 +44,18 @@ public class Robot extends IterativeRobot {
 	public CANTalon intakeMotor;
 	public CANTalon climbMotor;
 	public CANTalon launchMotor;
-	public AnalogInput shooterRPM;
-	public OpticalEncoder clicker;
-	public static AHRS navx;
 	public CANTalon feederMotor;
-
+	public AnalogTrigger shooterRPMAnalog;
+	public Counter shooterRPM;
 	
+	public static AHRS navx;
+
 	public static DriveTrain driveTrain;
 	public static Intake intake;
 	public static Shooter launch;
 	public static Climber climb;
+	
+	//public static PIDController pid;
 	
 	
     public void robotInit() {
@@ -67,17 +73,22 @@ public class Robot extends IterativeRobot {
     	
     	intakeMotor = new CANTalon(Constants.intakeMotorPort);
     	
+    	shooterRPMAnalog = new AnalogTrigger(Constants.opticalEncoderPort);
+    	shooterRPMAnalog.setLimitsRaw(0, 2000);
+    	shooterRPM = new Counter(new AnalogTriggerOutput(shooterRPMAnalog, AnalogTriggerOutput.AnalogTriggerType.kInWindow));
+    	
     	driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor);
     	intake = new Intake(intakeMotor);
     	climb = new Climber(climbMotor);
-    	launch = new Shooter(launchMotor, feederMotor);
-    	shooterRPM = new AnalogInput(0);
-    	clicker = new OpticalEncoder(shooterRPM);
-    	
-    	
+    	launch = new Shooter(launchMotor, feederMotor, shooterRPM);
     	
     }
 	
+    /*public PIDController getShooterPIDController() {
+    	PIDController pid = new PIDController();
+    	pid.setPID(1, 1, 1); //values need testing
+    }*/
+    
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
@@ -89,10 +100,11 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("encoder: " + clicker.clicks);
+		System.out.println("RPM:" + (60 / shooterRPM.getPeriod()));
+		/*System.out.println("encoder: " + clicker.clicks);
 		System.out.println("lowLightLevel: " + clicker.lowLightLevel);
 		System.out.println("currentLightLevel: " + clicker.opticalEncoder.getValue());
-		clicker.setRPM();
+		clicker.setRPM();*/
 	}
 
 	/**
@@ -130,10 +142,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        System.out.println(clicker.clicks);
-		clicker.setRPM();
+        System.out.println("RPM:" + (60 / shooterRPM.getPeriod()));
+        /*System.out.println(clicker.clicks);
+		clicker.setRPM();*/
     }
-    
+  
     /**
      * This function is called periodically during test mode
      */

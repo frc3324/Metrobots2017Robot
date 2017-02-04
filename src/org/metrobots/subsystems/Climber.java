@@ -16,7 +16,7 @@ public class Climber extends Subsystem{
 	{
 		if (up)
 		{
-			climb.set(1.0);
+			climb.set(-1.0);
 		}
 		else
 		{
