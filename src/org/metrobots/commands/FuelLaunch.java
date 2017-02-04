@@ -23,7 +23,7 @@ public class FuelLaunch extends Command{
 			speed = 0;
 		}
 		Robot.launch.launch(speed);
-		
+		Robot.launch.feed(Robot.cont1.getButton(MetroXboxController.BUTTON_B));
 	}	
 	
 	@Override

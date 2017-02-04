@@ -43,6 +43,8 @@ public class Robot extends IterativeRobot {
 	public AnalogInput shooterRPM;
 	public OpticalEncoder clicker;
 	public static AHRS navx;
+	public CANTalon feederMotor;
+
 	
 	public static DriveTrain driveTrain;
 	public static Intake intake;
@@ -59,6 +61,7 @@ public class Robot extends IterativeRobot {
     	brMotor = new CANTalon(Constants.brMotorPort);
     	climbMotor = new CANTalon(Constants.climbMotorPort);
     	launchMotor = new CANTalon(Constants.launchMotorPort);
+    	feederMotor = new CANTalon (Constants.feederMotorPort);
     	
     	navx = new AHRS(SPI.Port.kMXP);
     	
@@ -67,7 +70,7 @@ public class Robot extends IterativeRobot {
     	driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor);
     	intake = new Intake(intakeMotor);
     	climb = new Climber(climbMotor);
-    	launch = new Shooter(launchMotor);
+    	launch = new Shooter(launchMotor, feederMotor);
     	shooterRPM = new AnalogInput(0);
     	clicker = new OpticalEncoder(shooterRPM);
     	
@@ -128,6 +131,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         System.out.println(clicker.clicks);
+		clicker.setRPM();
     }
     
     /**

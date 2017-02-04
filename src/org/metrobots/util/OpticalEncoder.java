@@ -7,14 +7,13 @@ public class OpticalEncoder {
 	public AnalogInput opticalEncoder;
 	
 	public int clicks = 0;
-	public int lowLightLevel = 0;
-	public int significantDiff = 300;
+	public int lowLightLevel = 2000;
+	public int significantDiff = 30;
 	
 	public boolean trigger;
 	
 	public OpticalEncoder(AnalogInput oe){
 		opticalEncoder = oe;
-		lowLightLevel = opticalEncoder.getValue();
 	}
 	
 	public int getRPM() {
@@ -23,11 +22,11 @@ public class OpticalEncoder {
 	
 	public void setRPM() {
 		
-		if (opticalEncoder.getValue() >= lowLightLevel - significantDiff && trigger == false) {
+		if (opticalEncoder.getValue() <= lowLightLevel && !trigger ) {
 			trigger = true;
 			clicks++;
 		}
-		if (trigger == true && opticalEncoder.getValue() < lowLightLevel - significantDiff) {
+		if (trigger && opticalEncoder.getValue() > lowLightLevel ) {
 			trigger = false;
 		}
 	}
