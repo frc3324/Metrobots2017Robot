@@ -1,25 +1,45 @@
 package org.metrobots.commands;
 
-import org.metrobots.MetroXboxController;
-import org.metrobots.Robot;
+import org.metrobots.subsystems.Scrounger;
+import org.metrobots.util.MetroGamepad;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class IntakeFuel extends Command{
+/**
+ * Teleop control of scrounger mechanism<br>
+ * <br>
+ * 
+ * Feb 5: Refactored. Also, added Javadocs - Cameron
+ * 
+ */
+public class IntakeFuel extends Command {
 
-	public IntakeFuel()
-	{
-		requires((Subsystem)Robot.intake);
+	public Scrounger scrounger;
+	public MetroGamepad gamepad;
+
+	/**
+	 * Get the objects necessary to operate the shooter
+	 * 
+	 * @param scr
+	 *            scrounger object
+	 * @param gp
+	 *            handheld controller for operating scrounger
+	 */
+	public IntakeFuel(Scrounger scr, MetroGamepad gp) {
+		scrounger = scr;
+		gamepad = gp;
 	}
-	
-    protected void execute() {
-    	Robot.intake.intake(Robot.cont1.getButton(MetroXboxController.RB));
-    }
-	
+
+	/**
+	 * Function constantly run during teleop. Controls:<br>
+	 * <b>Right Bumper</b>: scrounge
+	 */
+	public void execute() {
+		scrounger.intake(gamepad.getButton(MetroGamepad.RB));
+	}
+
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

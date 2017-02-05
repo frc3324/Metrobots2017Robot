@@ -1,55 +1,97 @@
 package org.metrobots.subsystems;
 
 import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Drive train subsystem for metrobot<br>
+ * <br>
+ * 
+ * Feb 5: Refactored. Also, added Javadocs - Cameron
+ * 
  */
 public class DriveTrain extends Subsystem {
 
-	public static CANTalon flMotor, blMotor, frMotor, brMotor;
-	
-	public RobotDrive robotDrive;
-	
-	public DriveTrain(CANTalon flMotor2, CANTalon blMotor2, CANTalon frMotor2, CANTalon brMotor2) {
-		
-		flMotor = flMotor2;
-		blMotor = blMotor2;
-		frMotor = frMotor2;
-		brMotor = brMotor2;
-		
-		robotDrive = new RobotDrive(flMotor, blMotor, frMotor, brMotor);
-		
+	public static CANTalon fl, bl, fr, br;
+	public static AHRS navx;
+
+	/**
+	 * Drive train object
+	 * 
+	 * @param flMotor
+	 *            front left motor
+	 * @param blMotor
+	 *            back left motor
+	 * @param frMotor
+	 *            front right motor
+	 * @param brMotor
+	 *            back right motor
+	 * @param navxSensor
+	 *            IMU sensor
+	 */
+	public DriveTrain(CANTalon flMotor, CANTalon blMotor, CANTalon frMotor, CANTalon brMotor, AHRS navxSensor) {
+
+		fl = flMotor;
+		bl = blMotor;
+		fr = frMotor;
+		br = brMotor;
+
+		navx = navxSensor;
 	}
-	
-	public void tankDrive(double left, double right){
-		flMotor.set(left);
-		blMotor.set(left);
-		frMotor.set(right);
-		brMotor.set(right);
-		
+
+	/**
+	 * Move motors like a tank drive
+	 * 
+	 * @param left
+	 *            value from -1.0 to 1.0 for the left side of the drive train
+	 * @param right
+	 *            value from -1.0 to 1.0 for the right side of the drive train
+	 */
+	public void tankDrive(double left, double right) {
+		fl.set(left);
+		bl.set(left);
+		fr.set(right);
+		br.set(right);
 	}
-	
-	public void mecanumDrive(double x, double y, double turn){
-		flMotor.set(x + y + turn);
-		blMotor.set(-x + y + turn);
-		frMotor.set(x - y + turn);
-		brMotor.set(-x - y + turn);
+
+	/**
+	 * Move motors like a mecanum drive
+	 * 
+	 * @param x
+	 *            strafe component of drive motion
+	 * @param y
+	 *            forward/backward component of drive motion
+	 * @param turn
+	 *            rotation component of drive motion
+	 */
+	public void mecanumDrive(double x, double y, double turn) {
+		fl.set(x + y + turn);
+		bl.set(-x + y + turn);
+		fr.set(x - y + turn);
+		br.set(-x - y + turn);
 	}
-	
-	@Override
+
+	/**
+	 * Get gyro angle
+	 * 
+	 * @return gyro angle
+	 */
+	public double getAngle() {
+		return navx.getAngle();
+	}
+
+	/**
+	 * Reset gyro value back to 0
+	 */
+	public void resetGyro() {
+		navx.reset();
+	}
+
+	/*
+	 * Necessary method that contains nothing
+	 */
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
 	}
-    
-	
-
-
-   
-    
 }
-

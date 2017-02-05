@@ -1,42 +1,38 @@
-
 package org.metrobots;
 
 import org.metrobots.commands.DriveGroup;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
-import org.metrobots.subsystems.Intake;
+import org.metrobots.subsystems.Scrounger;
 import org.metrobots.subsystems.Shooter;
+import org.metrobots.util.MetroGamepad;
 import org.metrobots.util.OpticalEncoder;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.AnalogTrigger;
-import edu.wpi.first.wpilibj.AnalogTriggerOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * Main robot code<br>
+ * <br>
+ * 
+ * Feb 5: Refactored. Also, added Javadocs - Cameron
+ * 
  */
 public class Robot extends IterativeRobot {
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-	
-	
-	public static MetroXboxController cont1;
+	/*
+	 * Declare gamepad objects
+	 */
+	public static MetroGamepad motionGamepad;
+	public static MetroGamepad mechanismGamepad;
+
+	/*
+	 * Declare CANTalon (TalonSRX) objects
+	 */
 	public CANTalon flMotor;
 	public CANTalon blMotor;
 	public CANTalon frMotor;
@@ -45,112 +41,108 @@ public class Robot extends IterativeRobot {
 	public CANTalon climbMotor;
 	public CANTalon launchMotor;
 	public CANTalon feederMotor;
-	public AnalogTrigger shooterRPMAnalog;
-	public Counter shooterRPM;
-	
+
+	/*
+	 * Declare sensor objects
+	 */
+	public OpticalEncoder shooterEncoder;
 	public static AHRS navx;
 
+	/*
+	 * Declare subsystems for the robot
+	 */
 	public static DriveTrain driveTrain;
-	public static Intake intake;
-	public static Shooter launch;
-	public static Climber climb;
-	
-	//public static PIDController pid;
-	
-	
-    public void robotInit() {
-    
-    	cont1 = new MetroXboxController(0);
-    	flMotor = new CANTalon(Constants.flMotorPort);
-    	blMotor = new CANTalon(Constants.blMotorPort);
-    	frMotor = new CANTalon(Constants.frMotorPort);
-    	brMotor = new CANTalon(Constants.brMotorPort);
-    	climbMotor = new CANTalon(Constants.climbMotorPort);
-    	launchMotor = new CANTalon(Constants.launchMotorPort);
-    	feederMotor = new CANTalon (Constants.feederMotorPort);
-    	
-    	navx = new AHRS(SPI.Port.kMXP);
-    	
-    	intakeMotor = new CANTalon(Constants.intakeMotorPort);
-    	
-    	shooterRPMAnalog = new AnalogTrigger(Constants.opticalEncoderPort);
-    	shooterRPMAnalog.setLimitsRaw(0, 2000);
-    	shooterRPM = new Counter(new AnalogTriggerOutput(shooterRPMAnalog, AnalogTriggerOutput.AnalogTriggerType.kInWindow));
-    	
-    	driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor);
-    	intake = new Intake(intakeMotor);
-    	climb = new Climber(climbMotor);
-    	launch = new Shooter(launchMotor, feederMotor, shooterRPM);
-    	
-    }
-	
-    /*public PIDController getShooterPIDController() {
-    	PIDController pid = new PIDController();
-    	pid.setPID(1, 1, 1); //values need testing
-    }*/
-    
-	/**
-     * This function is called once each time the robot enters Disabled mode.
-     * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-     */
-    public void disabledInit(){
+	public static Scrounger intake;
+	public static Shooter shooter;
+	public static Climber climber;
 
-    }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-		System.out.println("RPM:" + (60 / shooterRPM.getPeriod()));
-		/*System.out.println("encoder: " + clicker.clicks);
-		System.out.println("lowLightLevel: " + clicker.lowLightLevel);
-		System.out.println("currentLightLevel: " + clicker.opticalEncoder.getValue());
-		clicker.setRPM();*/
+	/**
+	 * When the robot first boots up, initialize all of the gamepads, motor
+	 * controllers, sensors, and subsystems
+	 */
+	public void robotInit() {
+		/*
+		 * Initialize gamepads
+		 */
+		motionGamepad = new MetroGamepad(Constants.motionGamepadPort);
+		mechanismGamepad = new MetroGamepad(Constants.mechanismGamepadPort);
+
+		/*
+		 * Initialize CANTalons (TalonSRX's)
+		 */
+		flMotor = new CANTalon(Constants.flMotorPort);
+		blMotor = new CANTalon(Constants.blMotorPort);
+		frMotor = new CANTalon(Constants.frMotorPort);
+		brMotor = new CANTalon(Constants.brMotorPort);
+		intakeMotor = new CANTalon(Constants.intakeMotorPort);
+		climbMotor = new CANTalon(Constants.climbMotorPort);
+		launchMotor = new CANTalon(Constants.launchMotorPort);
+		feederMotor = new CANTalon(Constants.feederMotorPort);
+
+		/*
+		 * Initialize sensors
+		 */
+		shooterEncoder = new OpticalEncoder(Constants.opticalEncoderPort);
+		navx = new AHRS(Constants.navxPort);
+
+		/*
+		 * Initialize subsystems
+		 */
+		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx);
+		intake = new Scrounger(intakeMotor);
+		climber = new Climber(climbMotor);
+		shooter = new Shooter(launchMotor, feederMotor, shooterEncoder);
+
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings & commands.
+	 * Initialize whatever you need to when the robot becomes disables
 	 */
-    public void autonomousInit() {
-    	
-    }
+	public void disabledInit() {
+	}
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
+	/**
+	 * Runs constantly when the robot is disabled. Good for displaying stuff to
+	 * the driver station
+	 */
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run(); // Run scheduler
+		System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
+	}
 
-    public void teleopInit() {
-    	
-    	Scheduler.getInstance().add(new DriveGroup());
-    	
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-    }
+	/**
+	 * Initialize whatever you need to when the robot starts autonomous
+	 */
+	public void autonomousInit() {
+	}
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        System.out.println("RPM:" + (60 / shooterRPM.getPeriod()));
-        /*System.out.println(clicker.clicks);
-		clicker.setRPM();*/
-    }
-  
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+	/**
+	 * Runs constantly when autonomous is enabled
+	 */
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run(); // Run scheduler
+	}
+
+	/**
+	 * Initialize whatever you need to when the robot starts teleop
+	 */
+	public void teleopInit() {
+		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to
+														// scheduler
+	}
+
+	/**
+	 * Runs constantly when teleop is enabled
+	 */
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run(); // Run Scheduler
+		System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
+	}
+
+	/**
+	 * Runs constantly when test mode is enabled
+	 */
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
 }
