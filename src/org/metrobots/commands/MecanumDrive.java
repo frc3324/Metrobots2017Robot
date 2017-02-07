@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MecanumDrive extends Command {
 
 	public DriveTrain driveTrain;
-	public MetroGamepad gamepad;
+	private MetroGamepad gamepad;
 
 	public boolean isFieldOriented = false;
 

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Climb extends Command {
 
 	public Climber climber;
-	public MetroGamepad gamepad;
+	private MetroGamepad gamepad;
 
 	/**
 	 * Get the objects necessary to operate the climber
@@ -35,7 +35,7 @@ public class Climb extends Command {
 	 * <b>Y</b>: spin climb winch
 	 */
 	public void execute() {
-		climber.climb(gamepad.getButton(MetroGamepad.BUTTON_Y));
+		climber.climb(gamepad.getButton(MetroGamepad.BUTTON_A));
 	}
 
 	/*

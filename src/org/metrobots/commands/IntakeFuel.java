@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeFuel extends Command {
 
 	public Scrounger scrounger;
-	public MetroGamepad gamepad;
+	private MetroGamepad gamepad;
 
 	/**
 	 * Get the objects necessary to operate the shooter
