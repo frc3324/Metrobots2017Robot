@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LaunchFuel extends Command {
 
 	public Shooter shooter;
-	public MetroGamepad gamepad;
+	private MetroGamepad gamepad;
+
+	
 
 	/**
 	 * Get the objects necessary to operate the shooter
@@ -28,6 +30,7 @@ public class LaunchFuel extends Command {
 	 */
 	public LaunchFuel(Shooter sh, MetroGamepad gp) {
 		shooter = sh;
+		shooter.enable();
 		gamepad = gp;
 	}
 
@@ -45,7 +48,11 @@ public class LaunchFuel extends Command {
 		}
 		if (gamepad.getButton(MetroGamepad.BUTTON_B)) {
 			shooter.launchWhenReady();
+		} else {
+			shooter.feed(false);
 		}
+		
+		
 	}
 
 	/*

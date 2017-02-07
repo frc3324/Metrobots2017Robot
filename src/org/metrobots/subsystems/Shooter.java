@@ -22,6 +22,8 @@ public class Shooter extends PIDSubsystem {
 	public static SpeedController flywheel;
 	public static SpeedController feeder;
 	public static OpticalEncoder encoder;
+	
+	
 
 	/**
 	 * Shooter object
@@ -36,7 +38,7 @@ public class Shooter extends PIDSubsystem {
 	public Shooter(SpeedController flywheelMotor, SpeedController feederMotor, OpticalEncoder opticalEncoder) {
 		super("Shooter", Constants.kShooterP, Constants.kShooterI, Constants.kShooterD); // Create PIDSubsystem for the shooter flywheel
 		setAbsoluteTolerance(Constants.kShooterTolerance); // Set tolerance for the flywheel PID
-		getPIDController().setContinuous(false); // Make the PID not continuous
+		getPIDController().setContinuous(true); // Make the PID not continuous
 		getPIDController().setOutputRange(0, Constants.maxShooterRPM); // Tells PID Controller never to reverse the flywheel
 		
 		/*
@@ -115,6 +117,7 @@ public class Shooter extends PIDSubsystem {
 	 * 
 	 * @return shooter RPM
 	 */
+	@Override
 	public double returnPIDInput() {
 		return encoder.getRPM();
 	}

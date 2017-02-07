@@ -36,7 +36,7 @@ public class MetroGamepad {
 
 	public static final double AXIS_DEADBAND = 0.01;
 
-	public Joystick gamepad;
+	private Joystick gamepad;
 
 	/**
 	 * Creates instance of MetroGamepad
