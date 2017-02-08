@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.SPI;
  * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
  *
+ * Feb 8: Added agitator Motor port; needs put on the robot - Xander
+ *
  */
 public class Constants {
 
@@ -24,6 +26,7 @@ public class Constants {
 	public final static int climbMotorPort = 7;
 	public final static int launchMotorPort = 5;
 	public final static int feederMotorPort = 4;
+	public final static int agitatorMotorPort = 8;
 
 	/*
 	 * Sensor ports

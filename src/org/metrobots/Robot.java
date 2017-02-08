@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
  * 
+ * Feb 8: Added agitator Talon and stuff - Xander
+ * 
  */
 public class Robot extends IterativeRobot {
 
@@ -41,6 +43,7 @@ public class Robot extends IterativeRobot {
 	public CANTalon climbMotor;
 	public CANTalon launchMotor;
 	public CANTalon feederMotor;
+	public CANTalon agitatorMotor;
 
 	/*
 	 * Declare sensor objects
@@ -78,6 +81,8 @@ public class Robot extends IterativeRobot {
 		climbMotor = new CANTalon(Constants.climbMotorPort);
 		launchMotor = new CANTalon(Constants.launchMotorPort);
 		feederMotor = new CANTalon(Constants.feederMotorPort);
+		agitatorMotor = new CANTalon(Constants.agitatorMotorPort);
+		
 
 		/*
 		 * Initialize sensors
@@ -91,7 +96,7 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx);
 		intake = new Scrounger(intakeMotor);
 		climber = new Climber(climbMotor);
-		shooter = new Shooter(launchMotor, feederMotor, shooterEncoder);
+		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
 
 	}
 
