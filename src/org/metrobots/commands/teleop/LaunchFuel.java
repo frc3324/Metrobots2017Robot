@@ -1,4 +1,4 @@
-package org.metrobots.commands;
+package org.metrobots.commands.teleop;
 
 import org.metrobots.Constants;
 import org.metrobots.subsystems.Shooter;
