@@ -41,11 +41,11 @@ public class Constants {
 	 * Shooter variables
 	 */
 	public final static double kShooterP = 15.0;
-	public final static double kShooterI = 0.01;
-	public final static double kShooterD = 5.0;
+	public final static double kShooterI = 0.025;
+	public final static double kShooterD = 0.0;
 	public final static double kShooterTolerance = 25;
 	public final static double maxShooterRPM = 5675.0;
-	public final static int keyShootingRPM = 3500;
+	public final static int keyShootingRPM = 3150;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
 

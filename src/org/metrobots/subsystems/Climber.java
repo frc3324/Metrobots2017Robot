@@ -32,7 +32,7 @@ public class Climber extends Subsystem {
 	 */
 	public void climb(boolean up) {
 		if (up) {
-			climber.set(-1.0);
+			climber.set(1.0);
 		} else {
 			climber.set(0);
 		}
