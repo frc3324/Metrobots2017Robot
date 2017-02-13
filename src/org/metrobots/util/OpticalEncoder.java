@@ -5,7 +5,6 @@ import org.metrobots.Constants;
 import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.AnalogTriggerOutput;
 import edu.wpi.first.wpilibj.Counter;
-import org.metrobots.Constants;
 
 /**
  * Class for using a light/color sensor as an encoder<br>

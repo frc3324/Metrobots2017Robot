@@ -1,4 +1,4 @@
-package org.metrobots.commands;
+package org.metrobots.commands.teleop;
 
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.util.MetroGamepad;
