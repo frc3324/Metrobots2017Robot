@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.SPI;
  * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
  *
+ * Feb 8: Added agitator Motor port; needs put on the robot - Xander
+ *
  */
 public class Constants {
 
@@ -24,6 +26,7 @@ public class Constants {
 	public final static int climbMotorPort = 7;
 	public final static int launchMotorPort = 5;
 	public final static int feederMotorPort = 4;
+	public final static int agitatorMotorPort = 8;
 
 	/*
 	 * Sensor ports
@@ -41,11 +44,11 @@ public class Constants {
 	 * Shooter variables
 	 */
 	public final static double kShooterP = 15.0;
-	public final static double kShooterI = 0.025;
-	public final static double kShooterD = 0.0;
+	public final static double kShooterI = 0.01;
+	public final static double kShooterD = 5.0;
 	public final static double kShooterTolerance = 25;
 	public final static double maxShooterRPM = 5675.0;
-	public final static int keyShootingRPM = 3150;
+	public final static int keyShootingRPM = 3500;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
 

@@ -13,6 +13,8 @@ import org.metrobots.util.OpticalEncoder;
  * Feb 5: Refactored shooter to use PIDSubsystem, utilizing the built in PID
  * controller. Also, added Javadocs - Cameron
  * 
+ * Feb 8: Added Agitator; may need tweaked. Boolean is "clear" - Xander
+ * 
  */
 public class Shooter extends PIDSubsystem {
 
@@ -21,6 +23,7 @@ public class Shooter extends PIDSubsystem {
 	 */
 	public static SpeedController flywheel;
 	public static SpeedController feeder;
+	public static SpeedController agitator;
 	public static OpticalEncoder encoder;
 	
 	
@@ -34,8 +37,10 @@ public class Shooter extends PIDSubsystem {
 	 *            motor used to feed fuel into flywheel
 	 * @param opticalEncoder
 	 *            encoder used for speed control of flywheel
+	 * @param agitatorMotor
+	 * 			  moter used to clear out storage; may need tweaked
 	 */
-	public Shooter(SpeedController flywheelMotor, SpeedController feederMotor, OpticalEncoder opticalEncoder) {
+	public Shooter(SpeedController flywheelMotor, SpeedController feederMotor, SpeedController agitatorMotor, OpticalEncoder opticalEncoder) {
 		super("Shooter", Constants.kShooterP, Constants.kShooterI, Constants.kShooterD); // Create PIDSubsystem for the shooter flywheel
 		setAbsoluteTolerance(Constants.kShooterTolerance); // Set tolerance for the flywheel PID
 		getPIDController().setContinuous(true); // Make the PID not continuous
@@ -46,6 +51,7 @@ public class Shooter extends PIDSubsystem {
 		 */
 		flywheel = flywheelMotor;
 		feeder = feederMotor;
+		agitator = agitatorMotor;
 		encoder = opticalEncoder;
 	}
 
@@ -64,6 +70,14 @@ public class Shooter extends PIDSubsystem {
 		}
 	}
 
+	public void clear(boolean clear) {
+		if (clear) {
+			agitator.set(0.5);
+		} else {
+			agitator.set(0.0);
+		}
+	}
+	
 	/**
 	 * Sends a boolean to feed, depending on whether the flywheel is up to speed
 	 * or not

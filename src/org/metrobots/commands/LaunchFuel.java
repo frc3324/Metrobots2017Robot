@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
  * 
+ * Feb 8: Added agitator. - Xander
+ * 
  */
 public class LaunchFuel extends Command {
 
@@ -48,10 +50,12 @@ public class LaunchFuel extends Command {
 		}
 		if (gamepad.getButton(MetroGamepad.BUTTON_B)) {
 			shooter.launchWhenReady();
+			shooter.clear(true);
 		} else {
 			shooter.feed(false);
+			shooter.clear(false);
 		}
-		
+			
 		
 	}
 
@@ -60,6 +64,6 @@ public class LaunchFuel extends Command {
 	 */
 	protected boolean isFinished() {
 		return false;
-	}
 
+	}
 }
