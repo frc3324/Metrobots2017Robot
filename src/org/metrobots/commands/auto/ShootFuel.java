@@ -11,7 +11,7 @@ public class ShootFuel extends Command{
 	
 	public double driveTime, speed;
 	
-	public ShootFuel(double speed, double driveTime) {
+	public ShootFuel(double driveTime, double speed) {
 		requires((Subsystem) Robot.shooter);
 		this.driveTime = driveTime;
 		this.speed = speed;
