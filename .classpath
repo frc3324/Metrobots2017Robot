@@ -7,5 +7,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/lipermi-1.0.1.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
+	<classpathentry kind="lib" path="lib/lipermi-1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
