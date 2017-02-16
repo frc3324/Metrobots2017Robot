@@ -8,5 +8,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/lipermi-1.0.1.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="lib" path="lib/lipermi-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Metrobots/wpilib/user/java/lib/lipermi-1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

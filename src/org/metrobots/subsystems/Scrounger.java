@@ -33,7 +33,7 @@ public class Scrounger extends Subsystem {
 	 */
 	public void intake(boolean in) {
 		if (in) {
-			scrounger.set(1.0);
+			scrounger.set(-1.0);
 		} else {
 			scrounger.set(0);
 		}
