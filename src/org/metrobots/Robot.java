@@ -1,7 +1,7 @@
 package org.metrobots;
 
 import org.metrobots.commands.DriveGroup;
-
+import org.metrobots.commands.auto.modes.CrossBaseline;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.subsystems.Scrounger;
@@ -140,6 +140,11 @@ public class Robot extends IterativeRobot {
 	 * Initialize whatever you need to when the robot starts autonomous
 	 */
 	public void autonomousInit() {
+		driveTrain.resetGyro();
+		driveTrain.setFieldOriented(true);
+		Scheduler.getInstance().add(new CrossBaseline());
+		
+		
 	}
 
 	/**
@@ -163,7 +168,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run(); // Run Scheduler
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
-		System.out.println("Comms Output:" + Robot.comms.getFiringStatus());
 	}
 
 	/**

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Teleop control of drive train<br>
  * <br>
  * 
+ * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
  * 
  */
@@ -16,8 +17,6 @@ public class MecanumDrive extends Command {
 
 	public DriveTrain driveTrain;
 	private MetroGamepad gamepad;
-
-	public boolean isFieldOriented = false;
 
 	/**
 	 * Get the objects necessary to operate the drive train
@@ -52,30 +51,24 @@ public class MecanumDrive extends Command {
 		double driverX = gamepad.getAxis(MetroGamepad.LEFT_X);
 		double driverY = gamepad.getAxis(MetroGamepad.LEFT_Y);
 		double turn = gamepad.getAxis(MetroGamepad.RIGHT_X);
-		double angle = driveTrain.getAngle() * Math.PI / 180;
 
 		if (gamepad.getButton(MetroGamepad.BUTTON_B)) {
-			isFieldOriented = true;
+			driveTrain.setFieldOriented(true);
 		} else if (gamepad.getButton(MetroGamepad.BUTTON_A)) {
-			isFieldOriented = false;
+			driveTrain.setFieldOriented(false);
 		}
 
 		if (gamepad.getButton(MetroGamepad.BUTTON_START)) {
 			driveTrain.resetGyro();
 		}
+		
+		/**
+		 * These are added to make the robot more controllable
+		 */
+		driverX = driverX * Math.abs(driverX);
+		driverY = driverY * Math.abs(driverY);
 
-		double x = 0;
-		double y = 0;
-
-		if (isFieldOriented) {
-			x = driverX * Math.cos(angle) - driverY * Math.sin(angle);
-			y = driverY * Math.cos(angle) + driverX * Math.sin(angle);
-		} else {
-			x = driverX;
-			y = driverY;
-		}
-
-		driveTrain.mecanumDrive(x, y, turn);
+		driveTrain.mecanumDrive(driverX, driverY, turn);
 	}
 
 	/*

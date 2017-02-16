@@ -23,9 +23,9 @@ public class Constants {
 	public final static int frMotorPort = 2;
 	public final static int brMotorPort = 3;
 	public final static int intakeMotorPort = 6;
-	public final static int climbMotorPort = 7;
-	public final static int launchMotorPort = 5;
-	public final static int feederMotorPort = 4;
+	public final static int climbMotorPort = 5;
+	public final static int launchMotorPort = 4;
+	public final static int feederMotorPort = 7;
 	public final static int agitatorMotorPort = 8;
 
 	/*
@@ -51,5 +51,11 @@ public class Constants {
 	public final static int keyShootingRPM = 3500;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
+	
+	/*
+	 * DriveTrain variables
+	 */
+	public final static double kDriveHoldAngleP = 0.05;
+	public final static double driveTrainAngleDeadband = 10;
 
 }

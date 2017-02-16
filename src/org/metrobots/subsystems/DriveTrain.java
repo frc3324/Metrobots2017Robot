@@ -1,5 +1,7 @@
 package org.metrobots.subsystems;
 
+import org.metrobots.Constants;
+
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -10,12 +12,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * <br>
  * 
  * Feb 5: Refactored. Also, added Javadocs - Cameron
+ * Feb 16: Move most of the mecanum code from the MecanumDrive file to here - Cameron
  * 
  */
 public class DriveTrain extends Subsystem {
 
 	public static CANTalon fl, bl, fr, br;
 	public static AHRS navx;
+	
+	public boolean isFieldOriented;
+	public boolean isHoldingAngle;
+	public boolean wasTurning;
+	public double targetAngle;
 
 	/**
 	 * Drive train object
@@ -67,10 +75,53 @@ public class DriveTrain extends Subsystem {
 	 *            rotation component of drive motion
 	 */
 	public void mecanumDrive(double x, double y, double turn) {
-		fl.set(x + y + turn);
-		bl.set(-x + y + turn);
-		fr.set(x - y + turn);
-		br.set(-x - y + turn);
+		double angle = getAngle() * Math.PI / 180;
+		
+		if (turn != 0.0 && wasTurning && isHoldingAngle) {
+			targetAngle = angle;
+		}
+		
+		if (turn == 0.0 && isHoldingAngle) {
+			turn = Constants.kDriveHoldAngleP * (targetAngle - angle);
+		}
+		wasTurning = (turn != 0);
+
+		double adjX = 0;
+		double adjY = 0;
+
+		if (isFieldOriented) {
+			adjX = x * Math.cos(angle) - y * Math.sin(angle);
+			adjY = y * Math.cos(angle) + x * Math.sin(angle);
+		} else {
+			adjX = x;
+			adjY = y;
+		}
+
+		fl.set(adjX + adjY + turn);
+		bl.set(-adjX + adjY + turn);
+		fr.set(adjX - adjY + turn);
+		br.set(-adjX - adjY + turn);
+		
+	}
+	
+	/**
+	 * Determine whether the robot will hold its angle or not
+	 * @param fo True if you want to field oriented control, false if you don't
+	 */
+	public void setFieldOriented(boolean fo) {
+		isFieldOriented = fo;
+	}
+	
+	/**
+	 * Determine whether the robot will hold its angle or not
+	 * @param ha True if you want to hold angle, false if you don't
+	 */
+	public void setIsHoldingAngle(boolean ha) {
+		isHoldingAngle = ha;
+	}
+	
+	public boolean isOnAngle() {
+		return Math.abs(targetAngle - getAngle()) < Constants.driveTrainAngleDeadband;
 	}
 
 	/**

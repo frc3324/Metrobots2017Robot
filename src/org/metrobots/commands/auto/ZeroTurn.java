@@ -22,17 +22,16 @@ public class ZeroTurn extends Command {
 
 	@Override
 	protected void execute() {
-		double startAngle = Robot.navx.getAngle();
-		while (true) {
-			Robot.driveTrain.mecanumDrive(0, 0, (startAngle + turnAngle));
-			
-		}
+		Robot.driveTrain.targetAngle = turnAngle;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		if (Math.abs(Robot.driveTrain.getAngle() - turnAngle) < 10) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

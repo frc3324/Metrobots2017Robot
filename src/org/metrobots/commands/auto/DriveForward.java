@@ -15,6 +15,7 @@ public class DriveForward extends Command {
 	public DriveForward(double speed, double driveTime) {
 		requires((Subsystem) Robot.driveTrain);
 		this.driveTime = driveTime;
+		Robot.driveTrain.resetGyro();
 		//System.out.println(Robot.comms.getOrientation(true)[2]);
 		this.speed = speed;
 	}
@@ -22,15 +23,13 @@ public class DriveForward extends Command {
 	@Override
 	protected void end() {
 		Robot.driveTrain.tankDrive(0, 0);
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		passedTime = Utility.getFPGATime() - startTime;
-		Robot.driveTrain.mecanumDrive(speed, speed, 0);
+		Robot.driveTrain.mecanumDrive(0, speed, 0);
 		//float angle = Robot.comms.getOrientation(true)[2];
 		//System.out.println("Angle: " + Float.toString(angle));
 	}
@@ -38,18 +37,15 @@ public class DriveForward extends Command {
 	@Override
 	protected void initialize() {
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
+		
 		Robot.driveTrain.resetGyro();
 		startTime = Utility.getFPGATime();
 		passedTime = 0;
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void interrupted() {
-		
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -60,9 +56,6 @@ public class DriveForward extends Command {
 		}
 		else
 			return false;
-		// TODO Auto-generated method stub
-		
-	
 	}
 
 }
