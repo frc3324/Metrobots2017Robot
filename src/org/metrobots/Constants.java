@@ -55,7 +55,7 @@ public class Constants {
 	/*
 	 * DriveTrain variables
 	 */
-	public final static double kDriveHoldAngleP = 0.05;
+	public final static double kDriveHoldAngleP = 1.25;
 	public final static double driveTrainAngleDeadband = 10;
 
 }

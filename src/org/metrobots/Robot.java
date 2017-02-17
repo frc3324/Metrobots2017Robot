@@ -158,6 +158,7 @@ public class Robot extends IterativeRobot {
 	 * Initialize whatever you need to when the robot starts teleop
 	 */
 	public void teleopInit() {
+		driveTrain.setIsHoldingAngle(true);
 		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to
 														// scheduler
 	}
@@ -167,6 +168,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run(); // Run Scheduler
+		System.out.println("holding angle: " + driveTrain.isHoldingAngle);
+		
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
 	}
 

@@ -75,16 +75,16 @@ public class DriveTrain extends Subsystem {
 	 *            rotation component of drive motion
 	 */
 	public void mecanumDrive(double x, double y, double turn) {
-		double angle = getAngle() * Math.PI / 180;
+		double angle = (getAngle() * Math.PI / 180) % 360;
 		
-		if (turn != 0.0 && wasTurning && isHoldingAngle) {
+		if (Math.abs(turn) > 0.05 && wasTurning && isHoldingAngle) {
 			targetAngle = angle;
 		}
 		
 		if (turn == 0.0 && isHoldingAngle) {
 			turn = Constants.kDriveHoldAngleP * (targetAngle - angle);
 		}
-		wasTurning = (turn != 0);
+		wasTurning = (Math.abs(turn) > 0.05);
 
 		double adjX = 0;
 		double adjY = 0;
@@ -103,7 +103,29 @@ public class DriveTrain extends Subsystem {
 		br.set(-adjX - adjY + turn);
 		
 	}
-	
+	/*public void mecanumDriveAngle(double leftX,double leftY, double rightX, double rightY, double turn){
+		double angle = getAngle() * Math.PI / 180;
+		double adjX = 0;
+		double adjY = 0;
+		double hypR = 0;
+		hypR = Math.sqrt((rightX*rightX)+(rightY*rightY));
+		if (Math.asin(rightY/hypR) == Math.acos(rightX/hypR)){
+			targetAngle = Math.asin(rightY/hypR);
+		}
+		if (isFieldOriented) {
+			adjX = leftX * Math.cos(angle) - leftY * Math.sin(angle);
+			adjY = leftY * Math.cos(angle) + leftX * Math.sin(angle);
+		} else {
+			adjX = leftX;
+			adjY = leftY;
+		}
+		
+
+		fl.set(adjX + adjY + turn);
+		bl.set(-adjX + adjY + turn);
+		fr.set(adjX - adjY + turn);
+		br.set(-adjX - adjY + turn);
+	}*/
 	/**
 	 * Determine whether the robot will hold its angle or not
 	 * @param fo True if you want to field oriented control, false if you don't
