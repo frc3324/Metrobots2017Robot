@@ -44,7 +44,7 @@ public class Shooter extends PIDSubsystem {
 		super("Shooter", Constants.kShooterP, Constants.kShooterI, Constants.kShooterD); // Create PIDSubsystem for the shooter flywheel
 		setAbsoluteTolerance(Constants.kShooterTolerance); // Set tolerance for the flywheel PID
 		getPIDController().setContinuous(true); // Make the PID not continuous
-		getPIDController().setOutputRange(0, Constants.maxShooterRPM); // Tells PID Controller never to reverse the flywheel
+		getPIDController().setOutputRange(0, 100000000); // Tells PID Controller never to reverse the flywheel
 		
 		/*
 		 * Initialize objects for shooter based off of the objects passed from robot
@@ -70,12 +70,13 @@ public class Shooter extends PIDSubsystem {
 		}
 	}
 
-	public void clear(boolean clear) {
-		if (clear) {
+	public void agitate(double speed) {
+		agitator.set(speed);
+		/*if (speed) {
 			agitator.set(0.5);
 		} else {
 			agitator.set(0.0);
-		}
+		}*/
 	}
 	
 	/**

@@ -43,19 +43,19 @@ public class Constants {
 	/*
 	 * Shooter variables
 	 */
-	public final static double kShooterP = 15.0;
-	public final static double kShooterI = 0.01;
-	public final static double kShooterD = 5.0;
-	public final static double kShooterTolerance = 25;
+	public final static double kShooterP = 60.0; //80
+	public final static double kShooterI = 0.005;
+	public final static double kShooterD = 150.0; //175
+	public final static double kShooterTolerance = 0.1;
 	public final static double maxShooterRPM = 5675.0;
-	public final static int keyShootingRPM = 3500;
+	public final static int keyShootingRPM = 3600;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
 	
 	/*
 	 * DriveTrain variables
 	 */
-	public final static double kDriveHoldAngleP = 1.25;
-	public final static double driveTrainAngleDeadband = 10;
+	public final static double kDriveHoldAngleP = .01;
+	public final static double driveTrainAngleDeadband = 3;
 
 }

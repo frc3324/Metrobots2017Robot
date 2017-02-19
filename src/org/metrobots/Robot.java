@@ -18,6 +18,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
 
@@ -94,6 +95,8 @@ public class Robot extends IterativeRobot {
 		feederMotor = new CANTalon(Constants.feederMotorPort);
 		agitatorMotor = new CANTalon(Constants.agitatorMotorPort);
 		
+		
+		
 
 		/*
 		 * Initialize sensors
@@ -134,14 +137,33 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
+		double driverRX = motionGamepad.getAxis(MetroGamepad.RIGHT_X);
+		double driverRY = motionGamepad.getAxis(MetroGamepad.RIGHT_Y);
+		double tempX = driverRX;
+		if (driverRX == 0) tempX = 0.0000001;
+		double angle = Math.toDegrees(Math.atan(driverRY / tempX));
+		if (tempX < 0) {
+			angle = 180 + angle;
+		}
+		if (tempX > 0 && driverRY < 0) {
+			angle = 360 + angle;
+		}
+		
+		/*if (tempX < 0) {
+			angle = 180 - angle;
+		}*/
+		/*if (driverRY < 0) {
+			angle += 180;
+		}*/
+		SmartDashboard.putNumber("right stick angle", angle);
 	}
 
 	/**
 	 * Initialize whatever you need to when the robot starts autonomous
 	 */
 	public void autonomousInit() {
-		driveTrain.resetGyro();
 		driveTrain.setFieldOriented(true);
+		driveTrain.resetHoldAngle();
 		Scheduler.getInstance().add(new CrossBaseline());
 		
 		
@@ -158,7 +180,8 @@ public class Robot extends IterativeRobot {
 	 * Initialize whatever you need to when the robot starts teleop
 	 */
 	public void teleopInit() {
-		driveTrain.setIsHoldingAngle(true);
+		driveTrain.setIsHoldingAngle(false);
+		driveTrain.resetHoldAngle();
 		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to
 														// scheduler
 	}
@@ -168,7 +191,11 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run(); // Run Scheduler
-		System.out.println("holding angle: " + driveTrain.isHoldingAngle);
+		//System.out.println("holding angle: " + driveTrain.isHoldingAngle);
+		System.out.println("RPM:" + shooter.getRPM());
+		SmartDashboard.putNumber("RPM", shooter.getRPM());
+		SmartDashboard.putNumber("targetAngle", driveTrain.getTargetAngle());
+		SmartDashboard.putNumber("idk", driveTrain.getAngle());
 		
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
 	}

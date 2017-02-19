@@ -23,6 +23,7 @@ public class DriveTrain extends Subsystem {
 	public boolean isFieldOriented;
 	public boolean isHoldingAngle;
 	public boolean wasTurning;
+	public boolean wasHoldingAngle;
 	public double targetAngle;
 
 	/**
@@ -75,11 +76,13 @@ public class DriveTrain extends Subsystem {
 	 *            rotation component of drive motion
 	 */
 	public void mecanumDrive(double x, double y, double turn) {
-		double angle = (getAngle() * Math.PI / 180) % 360;
+		double angle = getAngle();
 		
-		if (Math.abs(turn) > 0.05 && wasTurning && isHoldingAngle) {
+		/*if (Math.abs(turn) > 0.05 && wasTurning && isHoldingAngle) {
 			targetAngle = angle;
-		}
+		}*/
+		
+		turn = Math.abs(turn) > 0.025 ? turn : 0;
 		
 		if (turn == 0.0 && isHoldingAngle) {
 			turn = Constants.kDriveHoldAngleP * (targetAngle - angle);
@@ -89,6 +92,7 @@ public class DriveTrain extends Subsystem {
 		double adjX = 0;
 		double adjY = 0;
 
+		angle = Math.toRadians(angle);
 		if (isFieldOriented) {
 			adjX = x * Math.cos(angle) - y * Math.sin(angle);
 			adjY = y * Math.cos(angle) + x * Math.sin(angle);
@@ -134,12 +138,24 @@ public class DriveTrain extends Subsystem {
 		isFieldOriented = fo;
 	}
 	
+	public void setTargetAngle(double angle) {
+		targetAngle = angle;
+	}
+	
 	/**
 	 * Determine whether the robot will hold its angle or not
 	 * @param ha True if you want to hold angle, false if you don't
 	 */
 	public void setIsHoldingAngle(boolean ha) {
 		isHoldingAngle = ha;
+	}
+	
+	public void holdThisAngle() {
+		wasHoldingAngle = isHoldingAngle;
+		if (!wasHoldingAngle) {
+			resetHoldAngle();
+		}
+		isHoldingAngle = true;
 	}
 	
 	public boolean isOnAngle() {
@@ -152,9 +168,17 @@ public class DriveTrain extends Subsystem {
 	 * @return gyro angle
 	 */
 	public double getAngle() {
-		return navx.getAngle();
+		return navx.getAngle() % 360;
 	}
-
+	
+	public double getTargetAngle() {
+		return targetAngle;
+	}
+	
+	public void resetHoldAngle(){
+		//navx.reset();
+		targetAngle = getAngle();
+	}
 	/**
 	 * Reset gyro value back to 0
 	 */

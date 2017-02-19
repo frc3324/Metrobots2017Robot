@@ -48,9 +48,10 @@ public class MecanumDrive extends Command {
 	 * <b>START</b>: Reset gyro
 	 */
 	public void execute() {
-		double driverX = gamepad.getAxis(MetroGamepad.LEFT_X);
-		double driverY = gamepad.getAxis(MetroGamepad.LEFT_Y);
-		double turn = gamepad.getAxis(MetroGamepad.RIGHT_X);
+		double driverLX = gamepad.getAxis(MetroGamepad.LEFT_X);
+		double driverLY = gamepad.getAxis(MetroGamepad.LEFT_Y);
+		double driverRX = gamepad.getAxis(MetroGamepad.RIGHT_X);
+		//double driverRY = gamepad.getAxis(MetroGamepad.RIGHT_Y);
 
 		if (gamepad.getButton(MetroGamepad.BUTTON_B)) {
 			driveTrain.setFieldOriented(true);
@@ -59,16 +60,55 @@ public class MecanumDrive extends Command {
 		}
 
 		if (gamepad.getButton(MetroGamepad.BUTTON_START)) {
-			driveTrain.resetGyro();
+			driveTrain.resetHoldAngle();
 		}
+		
+		if (gamepad.getButton(MetroGamepad.RB)) {
+			driveTrain.holdThisAngle();
+		} else {
+			driveTrain.setIsHoldingAngle(false);
+		}
+		
+		/*if (gamepad.getDPadAngle() != -1) {
+			driveTrain.setIsHoldingAngle(true);
+			driveTrain.setTargetAngle(-(gamepad.getDPadAngle()-90));
+		}*/
+		
+		/*if (gamepad.getButton(MetroGamepad.RB)) {
+			double tempX = driverRX;
+			if (driverRX == 0) tempX = 0.0000001;
+			double angle = Math.toDegrees(Math.atan(driverRY / tempX));
+			if (tempX < 0) {
+				angle = 180 + angle;
+			}
+			if (tempX > 0 && driverRY < 0) {
+				angle = 360 + angle;
+			}
+			//double angle = Math.toDegrees(Math.atan(tempX / tempY));
+			driveTrain.setTargetAngle(-angle);
+			if (driverRX != 0.0 || driverRY != 0.0) {
+				driveTrain.setIsHoldingAngle(true);
+			}
+		}*/
+		
+		/*if (!gamepad.getButton(MetroGamepad.RB) && driverRX != 0.0 && driverRY != 0.0) {
+			driveTrain.setIsHoldingAngle(false);
+		}*/
 		
 		/**
 		 * These are added to make the robot more controllable
 		 */
-		driverX = driverX * Math.abs(driverX);
-		driverY = driverY * Math.abs(driverY);
+		driverLX = driverLX * driverLX * driverLX;
+		driverLY = driverLY * driverLY * driverLY;
+		driverRX = driverRX * driverRX * driverRX;
+		
+		if (gamepad.getButton(MetroGamepad.LB)) {
+			driverLX *= 0.5;
+			driverLY *= 0.5;
+			driverRX *= 0.5;
+		}
 
-		driveTrain.mecanumDrive(driverX, driverY, turn);
+		driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
 	}
 
 	/*

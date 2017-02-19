@@ -20,13 +20,11 @@ public class DriveForward extends Command {
 		this.speed = speed;
 	}
 	
-	@Override
 	protected void end() {
 		Robot.driveTrain.tankDrive(0, 0);
 		
 	}
 
-	@Override
 	protected void execute() {
 		passedTime = Utility.getFPGATime() - startTime;
 		Robot.driveTrain.mecanumDrive(0, speed, 0);
@@ -50,7 +48,7 @@ public class DriveForward extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if((passedTime / 1000000) > driveTime)
+		if((passedTime / 1100000) > driveTime)
 		{
 			return true;
 		}
