@@ -5,13 +5,11 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Metrobots2017Robot/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lipermi-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/CTRLib.jar"/>
 	<classpathentry kind="lib" path="lib/navx_frc.jar"/>
-	<classpathentry kind="lib" path="lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="/Users/emilypang/Downloads/2016Robot 2/libraries/lipermi-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/cscore.jar"/>
 	<classpathentry kind="lib" path="lib/opencv.jar"/>
-	<classpathentry kind="lib" path="lib/NetworkTables.jar"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
@@ -20,5 +18,7 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/lipermi-1.0.1.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="lib" path="/Users/emilypang/wpilib/java/current/lib/NetworkTables.jar" sourcepath="/Users/emilypang/wpilib/java/current/lib/NetworkTables-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/emilypang/wpilib/java/current/lib/WPILib.jar" sourcepath="/Users/emilypang/wpilib/java/current/lib/WPILib-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
