@@ -35,8 +35,8 @@ public class DriveForward extends Command {
 	@Override
 	protected void initialize() {
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
-		
 		Robot.driveTrain.resetGyro();
+		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getAngle());
 		startTime = Utility.getFPGATime();
 		passedTime = 0;
 		

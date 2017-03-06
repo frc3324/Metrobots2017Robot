@@ -35,6 +35,8 @@ public class Climb extends Command {
 	 * <b>Y</b>: spin climb winch
 	 */
 	public void execute() {
+		//if(gamepad.getButton(MetroGamepad.BUTTON_A))
+		//	climber.climb(true);//This will never stop
 		climber.climb(gamepad.getButton(MetroGamepad.BUTTON_A));
 	}
 

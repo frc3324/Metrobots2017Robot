@@ -4,6 +4,8 @@ public interface CommInterface {
     float[] getOrientation(boolean returnAngle);
     float[] getAccelerometer();
     int getFiringStatus();
-    int getDirection();
-    int getMagnitude();
+    int getXStatus();
+    int getMagnitude(); //or maybe getMagnitude()
+    int getDirection(); //or maybe getDirection()
+//github.com/frc3324/Metrobots2017Robot.git
 }

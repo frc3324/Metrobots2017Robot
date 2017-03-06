@@ -22,6 +22,7 @@ public class Climber extends Subsystem {
 	 */
 	public Climber(SpeedController climbMotor) {
 		climber = climbMotor;
+		climber.set(0);
 	}
 
 	/**

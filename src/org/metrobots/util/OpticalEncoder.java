@@ -40,6 +40,6 @@ public class OpticalEncoder {
 	 * @return RPM
 	 */
 	public double getRPM() {
-		return 60 / counter.getPeriod();
+		return (60/11) / counter.getPeriod();
 	}
 }

@@ -1,5 +1,6 @@
 package org.metrobots.commands.teleop;
 
+import org.metrobots.Robot;
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.util.MetroGamepad;
 
@@ -60,13 +61,18 @@ public class MecanumDrive extends Command {
 		}
 
 		if (gamepad.getButton(MetroGamepad.BUTTON_START)) {
-			driveTrain.resetHoldAngle();
+			driveTrain.resetGyro();
 		}
 		
 		if (gamepad.getButton(MetroGamepad.RB)) {
 			driveTrain.holdThisAngle();
 		} else {
 			driveTrain.setIsHoldingAngle(false);
+		}
+		
+		//Vision Integration Code
+		if (gamepad.getButton(MetroGamepad.LT)) {
+			driveTrain.visionGear();
 		}
 		
 		/*if (gamepad.getDPadAngle() != -1) {
@@ -106,6 +112,15 @@ public class MecanumDrive extends Command {
 			driverLX *= 0.5;
 			driverLY *= 0.5;
 			driverRX *= 0.5;
+			Robot.driveTrain.fl.enableBrakeMode(true);
+			Robot.driveTrain.bl.enableBrakeMode(true);
+			Robot.driveTrain.fr.enableBrakeMode(true);
+			Robot.driveTrain.br.enableBrakeMode(true);
+		} else {
+			Robot.driveTrain.fl.enableBrakeMode(false);
+			Robot.driveTrain.bl.enableBrakeMode(false);
+			Robot.driveTrain.fr.enableBrakeMode(false);
+			Robot.driveTrain.br.enableBrakeMode(false);
 		}
 		if (gamepad.getButton(MetroGamepad.LT)) {
 			driveTrain.visionGear();

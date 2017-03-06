@@ -22,11 +22,11 @@ public class Constants {
 	public final static int blMotorPort = 1;
 	public final static int frMotorPort = 2;
 	public final static int brMotorPort = 3;
-	public final static int intakeMotorPort = 6;
+	public final static int intakeMotorPort = 8;//6
 	public final static int climbMotorPort = 5;
 	public final static int launchMotorPort = 4;
 	public final static int feederMotorPort = 7;
-	public final static int agitatorMotorPort = 8;
+	public final static int agitatorMotorPort = 6;//8
 
 	/*
 	 * Sensor ports
@@ -41,16 +41,19 @@ public class Constants {
 	public final static int mechanismGamepadPort = 1;
 
 	/*
+	 * 
 	 * Shooter variables
 	 */
-	public final static double kShooterP = 60.0; //80
-	public final static double kShooterI = 0.005;
-	public final static double kShooterD = 150.0; //175
+	public final static double kShooterP = 20.0; //80
+	public final static double kShooterI = 0.0;
+	public final static double kShooterD = 100.0; //175
 	public final static double kShooterTolerance = 0.1;
 	public final static double maxShooterRPM = 5675.0;
-	public final static int keyShootingRPM = 3600;
+	public final static int keyShootingRPM = 3200;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
+	public static double kFlywheelSpeed = 0.8;
+	public final static double kFeederSpeed = 1.0;
 	
 	/*
 	 * DriveTrain variables

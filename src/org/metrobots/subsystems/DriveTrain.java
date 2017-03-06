@@ -1,7 +1,11 @@
 package org.metrobots.subsystems;
 
 import org.metrobots.Constants;
+
 import org.metrobots.commands.auto.DriveForward;
+
+import org.metrobots.Robot;
+//github.com/frc3324/Metrobots2017Robot.git
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -125,7 +129,6 @@ public class DriveTrain extends Subsystem {
 			adjY = leftY;
 		}
 		
-
 		fl.set(adjX + adjY + turn);
 		bl.set(-adjX + adjY + turn);
 		fr.set(adjX - adjY + turn);
@@ -185,6 +188,42 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void resetGyro() {
 		navx.reset();
+	}
+	
+	//Vision Integration
+	public void visionGear () {
+		int directionVision = org.metrobots.Robot.comms.getDirection();
+		int magnitudeVision = org.metrobots.Robot.comms.getMagnitude();
+		
+		if (directionVision == -1) { //move left
+			
+		}
+		
+		else if (directionVision == 1) { //move right
+			
+		}
+		
+		else if (directionVision == 0) { //don't move
+			
+		}
+		
+		
+		if (magnitudeVision == 3) { //move fast speed
+			
+		}
+		
+		else if (magnitudeVision == 2) { //move medium speed
+		
+		}
+		
+		else if (magnitudeVision == 1) { //move slow speed
+			
+		}
+		
+		else if (magnitudeVision == 0) { //don't move
+			
+		}
+		
 	}
 
 	/*public void visionGear() {
