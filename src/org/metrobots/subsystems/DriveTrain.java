@@ -1,6 +1,7 @@
 package org.metrobots.subsystems;
 
 import org.metrobots.Constants;
+import org.metrobots.commands.auto.DriveForward;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -186,6 +187,48 @@ public class DriveTrain extends Subsystem {
 		navx.reset();
 	}
 
+	/*public void visionGear() {
+		int visionDirection = org.metrobots.Robot.comms.getDirection();
+		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();
+		double visionSpeed = 0.0;
+		
+		if (Math.abs(visionDirection) == 1) {
+			if (visionDirection == 1) { //move right
+				visionSpeed = 0.5;
+				//mecanumDrive(1.0, 0.0, 0.0);
+			}
+		
+			else if (visionDirection == -1) { //move left
+				visionSpeed = -0.5;
+				//mecanumDrive(1.0, 0.0, 0.0);
+			}
+			
+			mecanumDrive(0, visionSpeed, 0);
+		
+		} else { //don't move left or right; ready to move forward
+			visionSpeed = 0;
+			if (visionMagnitude == 3) { //move forward fast speed
+				visionSpeed = 0.75;
+				//mecanumDrive(0.0, 1.0, 0.0);
+			}
+		
+			else if (visionMagnitude == 2) { //move forward medium speed
+				visionSpeed = 0.50;
+				//mecanumDrive(0.0, 1.0, 0.0);
+			}
+		
+			else if (visionMagnitude == 1) { //move forward low speed
+				visionSpeed = 0.25;
+				//mecanumDrive(0.0, 1.0, 0.0);
+			}
+		
+			else if (visionMagnitude == 0) { //don't move forward
+				visionSpeed = 0.0;
+			}
+			 mecanumDrive(visionSpeed, 0, 0);
+		}
+	}*/
+	
 	/*
 	 * Necessary method that contains nothing
 	 */

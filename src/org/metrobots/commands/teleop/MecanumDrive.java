@@ -107,8 +107,11 @@ public class MecanumDrive extends Command {
 			driverLY *= 0.5;
 			driverRX *= 0.5;
 		}
-
-		driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
+		if (gamepad.getButton(MetroGamepad.LT)) {
+			driveTrain.visionGear();
+		} else {
+			driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
+		}
 	}
 
 	/*
