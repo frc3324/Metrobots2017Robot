@@ -6,6 +6,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CrossBaseline extends CommandGroup {
 	public CrossBaseline() {
-		this.addSequential(new DriveForward(0.5, 3));
+		this.addSequential(new DriveForward(0.5, 2));
 	}
 }

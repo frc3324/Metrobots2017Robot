@@ -44,10 +44,10 @@ public class LaunchFuel extends Command {
 	 */
 	public void execute() {
 		if (gamepad.getButton(MetroGamepad.BUTTON_X)) {
-			//shooter.flywheel.set(.78);
-			shooter.setTargetSpeed(Constants.keyShootingRPM);
+			shooter.flywheel.set(Constants.kFlywheelSpeed);
+			//shooter.setTargetSpeed(Constants.keyShootingRPM);
 		} else if (gamepad.getButton(MetroGamepad.BUTTON_Y)) {
-			shooter.setTargetSpeed(0);
+			shooter.flywheel.set(0);
 			//shooter.flywheel.set(0);
 		}
 		shooter.agitate(gamepad.getAxis(MetroGamepad.LEFT_Y));
@@ -58,8 +58,7 @@ public class LaunchFuel extends Command {
 			shooter.feed(false);
 			//shooter.agitate(false);
 		}
-		
-		
+		shooter.modulateShooterSpeed(gamepad.getAxis(MetroGamepad.RIGHT_Y));
 			
 		
 	}
