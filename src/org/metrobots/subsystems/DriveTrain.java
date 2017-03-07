@@ -195,18 +195,19 @@ public class DriveTrain extends Subsystem {
 		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();
 		double visionSpeed = 0.0;
 		
-		if ((visionDirection) == 1) {
+		//all numbers for mecanumDrive are not final
+		if ((visionDirection) != 0) {
 			if (visionDirection == 1) { //move robot right
 				visionSpeed = 0.5;
 				mecanumDrive(1.0, 0.0, 0.0);
 			}
 		
 			else if (visionDirection == -1) { //move robot left
-				visionSpeed = -0.5;
-				mecanumDrive(1.0, 0.0, 0.0);
+				visionSpeed = 0.5;
+				mecanumDrive(-1.0, 0.0, 0.0);
 			}
 			
-			mecanumDrive(0, visionSpeed, 0);
+			//mecanumDrive(0, visionSpeed, 0);
 		
 		} else { //don't move left or right; ready to move forward
 			visionSpeed = 0;
@@ -228,7 +229,8 @@ public class DriveTrain extends Subsystem {
 			else if (visionMagnitude == 0) { //don't move robot forward
 				visionSpeed = 0.0;
 			}
-			 mecanumDrive(visionSpeed, 0, 0);
+			
+			mecanumDrive(visionSpeed, 0, 0);
 			
 			}
 		}

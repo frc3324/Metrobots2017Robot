@@ -46,7 +46,7 @@ public class Climb extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
-	/*}
+	}
 
 	@Override
 	protected void initialize() {
@@ -64,6 +64,6 @@ public class Climb extends Command {
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		
-	}*/
+	}
 
 }
