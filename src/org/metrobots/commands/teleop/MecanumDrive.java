@@ -122,8 +122,11 @@ public class MecanumDrive extends Command {
 			Robot.driveTrain.fr.enableBrakeMode(false);
 			Robot.driveTrain.br.enableBrakeMode(false);
 		}
-
-		driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
+		if (gamepad.getButton(MetroGamepad.LT)) {
+			driveTrain.visionGear();
+		} else {
+			driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
+		}
 	}
 
 	/*
@@ -131,6 +134,18 @@ public class MecanumDrive extends Command {
 	 */
 	protected boolean isFinished() {
 		return false;
+	}
+
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
