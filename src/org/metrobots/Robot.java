@@ -115,8 +115,9 @@ public class Robot extends IterativeRobot {
 		climber = new Climber(climbMotor);
 		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
 		
-		CallHandler callHandler = new CallHandler();
+		
 		try {
+			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
 			Client client = new Client("127.0.0.1", 5800, callHandler);
 			comms = (CommInterface) client.getGlobal(CommInterface.class);
@@ -141,17 +142,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
-		double driverRX = motionGamepad.getAxis(MetroGamepad.RIGHT_X);
-		double driverRY = motionGamepad.getAxis(MetroGamepad.RIGHT_Y);
-		double tempX = driverRX;
-		if (driverRX == 0) tempX = 0.0000001;
-		double angle = Math.toDegrees(Math.atan(driverRY / tempX));
-		if (tempX < 0) {
-			angle = 180 + angle;
-		}
-		if (tempX > 0 && driverRY < 0) {
-			angle = 360 + angle;
-		}
+		//System.out.println("shooter encoder value:");
 		
 		/*if (tempX < 0) {
 			angle = 180 - angle;
@@ -159,7 +150,7 @@ public class Robot extends IterativeRobot {
 		/*if (driverRY < 0) {
 			angle += 180;
 		}*/
-		SmartDashboard.putNumber("right stick angle", angle);
+		
 	}
 
 	/**
@@ -169,7 +160,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.setFieldOriented(true);
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
-		Scheduler.getInstance().add(new CrossBaseline());
+		Scheduler.getInstance().add(new GearMiddlePeg());
 		
 		
 	}
@@ -199,7 +190,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run(); // Run Scheduler
-		System.out.println("flywheelspeed:" + Constants.kFlywheelSpeed);
+		//System.out.println("flywheelspeed:" + Constants.kFlywheelSpeed);
+		System.out.println("RPM:" + shooter.getRPM() + " with speed " + Constants.kFlywheelSpeed); // Print shooter RPM
 		//Constants.kFlywheelSpeed = SmartDashboard.getNumber("flywheelspeed");
 		//System.out.println(comms.getStatusMagnitude());
 		//System.out.println(comms.getStatusDirection();)
@@ -220,7 +212,7 @@ public class Robot extends IterativeRobot {
 		 */
 		//System.out.println("RPM:" + shooter.getRPM());
 		/*
-		SmartDashboard.putNumber("RPM", shooter.getRPM());
+		*/SmartDashboard.putNumber("RPM", shooter.getRPM());/*
 		SmartDashboard.putNumber("targetAngle", driveTrain.getTargetAngle());
 		SmartDashboard.putNumber("idk", driveTrain.getAngle());
 		

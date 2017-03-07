@@ -71,9 +71,9 @@ public class MecanumDrive extends Command {
 		}
 		
 		//Vision Integration Code
-		if (gamepad.getButton(MetroGamepad.LT)) {
+		/*if (gamepad.getButton(MetroGamepad.LT)) {
 			driveTrain.visionGear();
-		}
+		}*/
 		
 		/*if (gamepad.getDPadAngle() != -1) {
 			driveTrain.setIsHoldingAngle(true);
