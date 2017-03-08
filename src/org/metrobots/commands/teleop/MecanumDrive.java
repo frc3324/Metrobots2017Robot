@@ -122,11 +122,12 @@ public class MecanumDrive extends Command {
 			Robot.driveTrain.fr.enableBrakeMode(false);
 			Robot.driveTrain.br.enableBrakeMode(false);
 		}
-		if (gamepad.getButton(MetroGamepad.LT)) {
+		/*if (gamepad.getButton(MetroGamepad.LT)) {
 			driveTrain.visionGear();
 		} else {
 			driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
-		}
+		}*/
+		driveTrain.mecanumDrive(driverLX, driverLY, driverRX);
 	}
 
 	/*

@@ -71,6 +71,8 @@ public class Robot extends IterativeRobot {
 	public static Scrounger intake;
 	public static Shooter shooter;
 	public static Climber climber;
+	
+	public String autoType = "CROSSBASELINE";
 
 	/**
 	 * When the robot first boots up, initialize all of the gamepads, motor
@@ -141,15 +143,14 @@ public class Robot extends IterativeRobot {
 	 */
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
-		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
-		//System.out.println("shooter encoder value:");
 		
-		/*if (tempX < 0) {
-			angle = 180 - angle;
-		}*/
-		/*if (driverRY < 0) {
-			angle += 180;
-		}*/
+		if (motionGamepad.getButton(MetroGamepad.BUTTON_A)) {
+			autoType = "CROSSBASELINE";
+		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
+			autoType = "MIDDLEGEAR";
+		}
+		
+		System.out.println("Autotype: " + autoType);
 		
 	}
 
@@ -160,7 +161,13 @@ public class Robot extends IterativeRobot {
 		driveTrain.setFieldOriented(true);
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
-		Scheduler.getInstance().add(new GearMiddlePeg());
+		if (autoType.equals("CROSSBASELINE")) {
+			Scheduler.getInstance().add(new CrossBaseline());
+		} else if (autoType.equals("MIDDLEGEAR")) {
+			Scheduler.getInstance().add(new GearMiddlePeg());
+		} else {
+			Scheduler.getInstance().add(new CrossBaseline());
+		}
 		
 		
 	}
@@ -180,7 +187,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
 		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to
-		shooter.flywheel.set(0);
+		shooter.setTargetSpeed(0);
 		//Constants.kFlywheelSpeed = SmartDashboard.getNumber("flywheelspeed");
 														// scheduler
 	}
@@ -191,7 +198,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run(); // Run Scheduler
 		//System.out.println("flywheelspeed:" + Constants.kFlywheelSpeed);
-		System.out.println("RPM:" + shooter.getRPM() + " with speed " + Constants.kFlywheelSpeed); // Print shooter RPM
+		//System.out.println("RPM:" + shooter.getRPM() + " with speed " + Constants.kFlywheelSpeed); // Print shooter RPM
 		//Constants.kFlywheelSpeed = SmartDashboard.getNumber("flywheelspeed");
 		//System.out.println(comms.getStatusMagnitude());
 		//System.out.println(comms.getStatusDirection();)
@@ -205,7 +212,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("Vision Output: Move Left " + comms.getMagnitude());
 		} else {
 			System.out.println("No Contours");
-		}*/	
+		}*/
 		
 		/*
 		//System.out.println("holding angle: " + driveTrain.isHoldingAngle);
