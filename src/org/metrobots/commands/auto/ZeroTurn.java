@@ -2,11 +2,14 @@ package org.metrobots.commands.auto;
 
 import org.metrobots.Robot;
 
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ZeroTurn extends Command {
+	
 	private float turnAngle;
+	public double startTime, passedTime;
 
 	public ZeroTurn(float angle, double speed) {
 		requires((Subsystem) Robot.driveTrain);
@@ -15,14 +18,18 @@ public class ZeroTurn extends Command {
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
 		Robot.driveTrain.resetGyro();
+		Robot.driveTrain.setIsHoldingAngle(true);
+		Robot.driveTrain.setTargetAngle(turnAngle);
+		startTime = Utility.getFPGATime();
+		passedTime = 0;
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.targetAngle = turnAngle;
+		passedTime = Utility.getFPGATime() - startTime;
+		Robot.driveTrain.mecanumDrive(0, 0, 0);
 	}
 
 	@Override
@@ -35,15 +42,9 @@ public class ZeroTurn extends Command {
 	}
 
 	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected void end() {}
 
 	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected void interrupted() {}
 
 }

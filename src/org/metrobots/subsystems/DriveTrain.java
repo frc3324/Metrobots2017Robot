@@ -89,21 +89,10 @@ public class DriveTrain extends Subsystem {
 	public void mecanumDrive(double x, double y, double turn) {
 		double angle = getAngle();
 		
-		/*drive.mecanumDrive_Cartesian(x, y, turn, getAngle());
-	}*/
-		
-		/*if (Math.abs(turn) > 0.05 && wasTurning && isHoldingAngle) {
-			targetAngle = angle;
-		}*/
-		
-		
-		
-		//turn = Math.abs(turn) > 0.025 ? turn : 0;
-		
 		if (turn == 0.0 && isHoldingAngle) {
 			turn = Constants.kDriveHoldAngleP * (targetAngle - angle);
 		}
-		wasTurning = (Math.abs(turn) > 0.05);
+		//wasTurning = (Math.abs(turn) > 0.05);
 
 		double adjX = 0;
 		double adjY = 0;

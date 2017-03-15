@@ -11,6 +11,10 @@ import org.metrobots.subsystems.Shooter;
 import org.metrobots.util.MetroGamepad;
 import org.metrobots.util.OpticalEncoder;
 
+import java.io.IOException;
+
+import org.metrobots.botcv.communication.CommInterface;
+
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -18,6 +22,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import net.sf.lipermi.handler.CallHandler;
+import net.sf.lipermi.net.Client;
 /**
  * Main robot code<br>
  * <br>
@@ -34,7 +40,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public static MetroGamepad motionGamepad;
 	public static MetroGamepad mechanismGamepad;
-	//public static CommInterface comms;
+	public static CommInterface comms;
 
 	/*
 	 * Declare CANTalon (TalonSRX) objects
@@ -109,7 +115,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
 		
 		
-		/*try {
+		try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
 			Client client = new Client("127.0.0.1", 5800, callHandler);
@@ -117,7 +123,7 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
 			e.printStackTrace();
-		}*/
+		}
 		
 
 	}
@@ -198,7 +204,8 @@ public class Robot extends IterativeRobot {
 		//System.out.println(comms.getStatusMagnitude());
 		//System.out.println(comms.getStatusDirection();)
 		
-		/*int commsOutput = comms.getDirection();
+		
+		int commsOutput = comms.getDirection(); //was comms.getDirection()
 		if (commsOutput == 1) {
 			System.out.println("Vision Output: Move Right " + comms.getMagnitude());
 		} else if (commsOutput == 0) {
@@ -207,7 +214,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("Vision Output: Move Left " + comms.getMagnitude());
 		} else {
 			System.out.println("No Contours");
-		}*/
+		}
 		
 		/*
 		//System.out.println("holding angle: " + driveTrain.isHoldingAngle);
