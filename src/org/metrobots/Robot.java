@@ -3,6 +3,7 @@ package org.metrobots;
 import org.metrobots.commands.DriveGroup;
 import org.metrobots.commands.auto.modes.CrossBaseline;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
+import org.metrobots.commands.auto.modes.ShootFuelRightCrossBaseline;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
 import org.metrobots.subsystems.Scrounger;
@@ -13,20 +14,10 @@ import org.metrobots.util.OpticalEncoder;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
-
-
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import net.sf.lipermi.handler.CallHandler;
-import net.sf.lipermi.net.Client;
-
-import java.io.IOException;
-
-import org.metrobots.botcv.communication.CommInterface;
-
 /**
  * Main robot code<br>
  * <br>
@@ -43,7 +34,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public static MetroGamepad motionGamepad;
 	public static MetroGamepad mechanismGamepad;
-	public static CommInterface comms;
+	//public static CommInterface comms;
 
 	/*
 	 * Declare CANTalon (TalonSRX) objects
@@ -118,7 +109,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
 		
 		
-		try {
+		/*try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
 			Client client = new Client("127.0.0.1", 5800, callHandler);
@@ -126,7 +117,7 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
 			e.printStackTrace();
-		}
+		}*/
 		
 
 	}
@@ -148,6 +139,8 @@ public class Robot extends IterativeRobot {
 			autoType = "CROSSBASELINE";
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
 			autoType = "MIDDLEGEAR";
+		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
+			autoType = "SHOOTRIGHT";
 		}
 		
 		System.out.println("Autotype: " + autoType);
@@ -165,6 +158,8 @@ public class Robot extends IterativeRobot {
 			Scheduler.getInstance().add(new CrossBaseline());
 		} else if (autoType.equals("MIDDLEGEAR")) {
 			Scheduler.getInstance().add(new GearMiddlePeg());
+		} else if (autoType.equals("SHOOTRIGHT")) {
+			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
 		} else {
 			Scheduler.getInstance().add(new CrossBaseline());
 		}

@@ -1,10 +1,10 @@
 package org.metrobots.subsystems;
 
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
-
 import org.metrobots.Constants;
 import org.metrobots.util.OpticalEncoder;
+
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  * Shooter mechanism for Metrobot<br>

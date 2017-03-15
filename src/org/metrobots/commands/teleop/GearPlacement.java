@@ -1,4 +1,5 @@
-package org.metrobots.commands.teleop;
+//this code was causing compiling warnings and preventing it from compiling
+/*package org.metrobots.commands.teleop;
 
 import org.metrobots.subsystems.GearRod;
 import org.metrobots.util.MetroGamepad;
@@ -49,3 +50,4 @@ public class GearPlacement extends Command {
 	
 	
 }
+*/

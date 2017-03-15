@@ -2,14 +2,10 @@ package org.metrobots.subsystems;
 
 import org.metrobots.Constants;
 
-import org.metrobots.commands.auto.DriveForward;
-import org.metrobots.util.MetroGamepad;
-import org.metrobots.Robot;
-//github.com/frc3324/Metrobots2017Robot.git
-
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -22,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-	public static CANTalon fl, bl, fr, br;
+	public CANTalon fl, bl, fr, br; //was static
 	public static AHRS navx;
 	
 	public boolean isFieldOriented;
@@ -30,6 +26,8 @@ public class DriveTrain extends Subsystem {
 	public boolean wasTurning;
 	public boolean wasHoldingAngle;
 	public double targetAngle;
+	
+	public RobotDrive drive;
 
 	/**
 	 * Drive train object
@@ -51,8 +49,16 @@ public class DriveTrain extends Subsystem {
 		bl = blMotor;
 		fr = frMotor;
 		br = brMotor;
+		
+		/*fl.setInverted(true);
+		bl.setInverted(true);
+		fr.setInverted(false);
+		br.setInverted(false);*/
 
 		navx = navxSensor;
+		//navx.
+		
+		//drive = new RobotDrive(fl, bl, fr, br);
 	}
 
 	/**
@@ -83,11 +89,16 @@ public class DriveTrain extends Subsystem {
 	public void mecanumDrive(double x, double y, double turn) {
 		double angle = getAngle();
 		
+		/*drive.mecanumDrive_Cartesian(x, y, turn, getAngle());
+	}*/
+		
 		/*if (Math.abs(turn) > 0.05 && wasTurning && isHoldingAngle) {
 			targetAngle = angle;
 		}*/
 		
-		turn = Math.abs(turn) > 0.025 ? turn : 0;
+		
+		
+		//turn = Math.abs(turn) > 0.025 ? turn : 0;
 		
 		if (turn == 0.0 && isHoldingAngle) {
 			turn = Constants.kDriveHoldAngleP * (targetAngle - angle);
@@ -190,7 +201,7 @@ public class DriveTrain extends Subsystem {
 		navx.reset();
 	}
 	
-	public void visionGear() {
+	/*public void visionGear() {
 		int visionDirection = org.metrobots.Robot.comms.getDirection();
 		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();
 		double visionSpeed = 0.0;
@@ -234,7 +245,7 @@ public class DriveTrain extends Subsystem {
 			
 			}
 		}
-	
+	*/
 	/*
 	 * Necessary method that contains nothing
 	 */

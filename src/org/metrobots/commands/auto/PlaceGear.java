@@ -26,12 +26,12 @@ public class PlaceGear extends Command {
 		
 	}
 
-	@Override
-	protected void execute() {
-		/*Robot.comms.getFiringStatus();
+	//@Override
+	/*protected void execute() 
+		Robot.comms.getFiringStatus();
 		Robot.comms.getDirection();
 		Robot.comms.getMagnitude();*/
-		double visionSpeed = 0.0;
+		/*double visionSpeed = 0.0;
 		int visionDirection = org.metrobots.Robot.comms.getDirection();
 		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();
 		
@@ -86,7 +86,7 @@ public class PlaceGear extends Command {
 		} else {
 			return false;
 		}
-	}
+	}*/
 
 	@Override
 	protected void end() {
@@ -100,4 +100,10 @@ public class PlaceGear extends Command {
 		
 	}
 
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }
