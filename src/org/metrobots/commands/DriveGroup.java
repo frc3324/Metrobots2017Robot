@@ -2,6 +2,7 @@ package org.metrobots.commands;
 
 import org.metrobots.Robot;
 import org.metrobots.commands.teleop.Climb;
+import org.metrobots.commands.teleop.GearPlacement;
 import org.metrobots.commands.teleop.IntakeFuel;
 import org.metrobots.commands.teleop.LaunchFuel;
 import org.metrobots.commands.teleop.MecanumDrive;
@@ -28,6 +29,7 @@ public class DriveGroup extends CommandGroup {
 		this.addParallel(new IntakeFuel(Robot.intake, Robot.mechanismGamepad));
 		this.addParallel(new Climb(Robot.climber, Robot.mechanismGamepad));
 		this.addParallel(new LaunchFuel(Robot.shooter, Robot.mechanismGamepad));
+		this.addParallel(new GearPlacement(Robot.gearMech, Robot.mechanismGamepad));
 		
 	}
 	

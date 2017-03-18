@@ -27,6 +27,12 @@ public class Constants {
 	public final static int launchMotorPort = 4;
 	public final static int feederMotorPort = 7;
 	public final static int agitatorMotorPort = 6;//8
+	
+	/*
+	 * Pneumatic Ports
+	 */
+	public final static int gearPushPort = 0;
+	public final static int gearPullPort = 1;
 
 	/*
 	 * Sensor ports
