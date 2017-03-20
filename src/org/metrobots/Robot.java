@@ -1,7 +1,11 @@
 package org.metrobots;
 
+import java.io.IOException;
+
+import org.metrobots.botcv.communication.CommInterface;
 import org.metrobots.commands.DriveGroup;
 import org.metrobots.commands.auto.modes.CrossBaseline;
+import org.metrobots.commands.auto.modes.CrossBaselineGearLeftPeg;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
 import org.metrobots.commands.auto.modes.ShootFuelRightCrossBaseline;
 import org.metrobots.subsystems.Climber;
@@ -12,10 +16,6 @@ import org.metrobots.subsystems.Shooter;
 import org.metrobots.util.MetroGamepad;
 import org.metrobots.util.OpticalEncoder;
 
-import java.io.IOException;
-
-import org.metrobots.botcv.communication.CommInterface;
-
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import net.sf.lipermi.handler.CallHandler;
+import net.sf.lipermi.net.Client;
 
 //import net.sf.lipermi.handler.CallHandler;
 //import net.sf.lipermi.net.Client;
@@ -80,7 +82,7 @@ public class Robot extends IterativeRobot {
 	public static Climber climber;
 	public static GearRod gearMech;
 	
-	public String autoType = "CROSSBASELINE";
+	public String autoType = "LEFTGEAR";
 
 	/**
 	 * When the robot first boots up, initialize all of the gamepads, motor
@@ -132,7 +134,7 @@ public class Robot extends IterativeRobot {
 		gearMech = new GearRod(gearPusher);
 		
 		
-		/*try {
+		try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
 			Client client = new Client("127.0.0.1", 5800, callHandler);
@@ -140,7 +142,7 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
 			e.printStackTrace();
-		}*/
+		}
 		
 
 	}
@@ -164,6 +166,8 @@ public class Robot extends IterativeRobot {
 			autoType = "MIDDLEGEAR";
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
 			autoType = "SHOOTRIGHT";
+		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_Y)) {
+			autoType = "LEFTGEAR";
 		}
 		
 		System.out.println("Autotype: " + autoType);
@@ -183,6 +187,8 @@ public class Robot extends IterativeRobot {
 			Scheduler.getInstance().add(new GearMiddlePeg());
 		} else if (autoType.equals("SHOOTRIGHT")) {
 			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
+		} else if (autoType.equals("LEFTGEAR")) {
+			Scheduler.getInstance().add(new CrossBaselineGearLeftPeg());
 		} else {
 			Scheduler.getInstance().add(new CrossBaseline());
 		}
