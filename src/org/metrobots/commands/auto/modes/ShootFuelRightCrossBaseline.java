@@ -1,9 +1,6 @@
 package org.metrobots.commands.auto.modes;
 
-import org.metrobots.commands.auto.DriveForward;
 import org.metrobots.commands.auto.ShootFuel;
-import org.metrobots.commands.auto.Strafe;
-import org.metrobots.commands.auto.ZeroTurn;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

@@ -1,6 +1,5 @@
 package org.metrobots.commands.auto;
 
-import org.metrobots.Constants;
 import org.metrobots.Robot;
 import org.metrobots.subsystems.Shooter;
 

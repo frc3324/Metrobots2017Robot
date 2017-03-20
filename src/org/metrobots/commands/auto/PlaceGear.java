@@ -32,18 +32,18 @@ public class PlaceGear extends Command {
 		Robot.comms.getDirection();
 		Robot.comms.getMagnitude();*/
 		double visionSpeed = 0.0;
-		int visionDirection = org.metrobots.Robot.comms.getDirection();
-		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();
+		int visionDirection = Robot.comms.getDirection();
+		int visionMagnitude = Robot.comms.getMagnitude();
 		
 		if ((visionDirection) != 0) {
 			if (visionDirection == 1) { //move robot right
 				visionSpeed = 0.5;
-				mecanumDrive(0.10, 0.0, 0.0);
+				mecanumDrive(0.50, 0.0, 0.0);
 			}
 		
 			else if (visionDirection == -1) { //move robot left
 				visionSpeed = 0.5;
-				mecanumDrive(-0.10, 0.0, 0.0);
+				mecanumDrive(-0.50, 0.0, 0.0);
 			}
 			
 			//mecanumDrive(0, visionSpeed, 0);
@@ -53,17 +53,17 @@ public class PlaceGear extends Command {
 			if (visionMagnitude == 3) { //move robot forward fast speed
 				visionSpeed = 0.75;
 				
-				mecanumDrive(0.0, 0.10, 0.0);
+				mecanumDrive(0.0, 0.50, 0.0);
 			}
 		
 			else if (visionMagnitude == 2) { //move robot forward medium speed
 				visionSpeed = 0.50;
-				mecanumDrive(0.0, 0.10, 0.0);
+				mecanumDrive(0.0, 0.50, 0.0);
 			}
 		
 			else if (visionMagnitude == 1) { //move robot forward low speed
 				visionSpeed = 0.25;
-				mecanumDrive(0.0, 0.10, 0.0);
+				mecanumDrive(0.0, 0.50, 0.0);
 			}
 		
 			else if (visionMagnitude == 0) { //don't move robot forward

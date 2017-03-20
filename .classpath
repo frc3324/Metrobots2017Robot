@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/navx_frc.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/cscore.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opencv.jar"/>
-	<classpathentry kind="lib" path="lib/lipermi-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/lipermi.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/Metrobots Admin/wpilib/java/current/lib/NetworkTables.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Metrobots Admin/wpilib/java/current/lib/WPILib.jar"/>
@@ -20,5 +20,6 @@
 	<classpathentry kind="var" path="navx-mxp"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/lipermi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

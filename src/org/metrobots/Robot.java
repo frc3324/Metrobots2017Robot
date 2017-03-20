@@ -137,7 +137,7 @@ public class Robot extends IterativeRobot {
 		try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
-			Client client = new Client("127.0.0.1", 5800, callHandler);
+			Client client = new Client("10.33.24.50", 5800, callHandler);
 			comms = (CommInterface) client.getGlobal(CommInterface.class);
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
@@ -170,7 +170,7 @@ public class Robot extends IterativeRobot {
 			autoType = "LEFTGEAR";
 		}
 		
-		System.out.println("Autotype: " + autoType);
+		//System.out.println("Autotype: " + autoType);
 		
 	}
 
@@ -200,7 +200,8 @@ public class Robot extends IterativeRobot {
 	 * Runs constantly when autonomous is enabled
 	 */
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run(); // Run scheduler
+		Scheduler.getInstance().run(); // Run scheduler4
+		System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 	}
 
 	/**

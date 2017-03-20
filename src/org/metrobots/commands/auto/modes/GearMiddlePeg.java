@@ -1,6 +1,5 @@
 package org.metrobots.commands.auto.modes;
 
-import org.metrobots.commands.auto.DriveForward;
 import org.metrobots.commands.auto.PlaceGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
