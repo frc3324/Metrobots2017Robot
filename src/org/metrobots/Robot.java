@@ -1,10 +1,16 @@
 package org.metrobots;
 
+import java.io.IOException;
+
+import org.metrobots.botcv.communication.CommInterface;
 import org.metrobots.commands.DriveGroup;
 import org.metrobots.commands.auto.modes.CrossBaseline;
+import org.metrobots.commands.auto.modes.CrossBaselineGearLeftPeg;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
+import org.metrobots.commands.auto.modes.ShootFuelRightCrossBaseline;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
+import org.metrobots.subsystems.GearRod;
 import org.metrobots.subsystems.Scrounger;
 import org.metrobots.subsystems.Shooter;
 import org.metrobots.util.MetroGamepad;
@@ -13,19 +19,14 @@ import org.metrobots.util.OpticalEncoder;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
-
-
-
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
-
-import java.io.IOException;
-
-import org.metrobots.botcv.communication.CommInterface;
 
 /**
  * Main robot code<br>
@@ -63,6 +64,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public OpticalEncoder shooterEncoder;
 	public static AHRS navx;
+	
+	/*
+	 * Declare Pnuematic jazz
+	 */
+	public DoubleSolenoid gearPusher;
+	public Compressor compressor;
 
 	/*
 	 * Declare subsystems for the robot
@@ -71,8 +78,9 @@ public class Robot extends IterativeRobot {
 	public static Scrounger intake;
 	public static Shooter shooter;
 	public static Climber climber;
+	public static GearRod gearMech;
 	
-	public String autoType = "CROSSBASELINE";
+	public String autoType = "LEFTGEAR";
 
 	/**
 	 * When the robot first boots up, initialize all of the gamepads, motor
@@ -98,10 +106,12 @@ public class Robot extends IterativeRobot {
 		feederMotor = new CANTalon(Constants.feederMotorPort);
 		agitatorMotor = new CANTalon(Constants.agitatorMotorPort);
 		
-		SmartDashboard.putNumber("flywheelspeed", Constants.kFlywheelSpeed);
-		
-		
-		
+		/*
+		 * Initialize Pneumatic stuff
+		 */
+		compressor = new Compressor(0);
+		compressor.setClosedLoopControl(true);
+		gearPusher = new DoubleSolenoid(Constants.gearPushPort, Constants.gearPullPort);
 
 		/*
 		 * Initialize sensors
@@ -116,12 +126,13 @@ public class Robot extends IterativeRobot {
 		intake = new Scrounger(intakeMotor);
 		climber = new Climber(climbMotor);
 		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
+		gearMech = new GearRod(gearPusher);
 		
 		
 		try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
-			Client client = new Client("127.0.0.1", 5800, callHandler);
+			Client client = new Client("10.33.24.50", 5800, callHandler);
 			comms = (CommInterface) client.getGlobal(CommInterface.class);
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
@@ -148,9 +159,13 @@ public class Robot extends IterativeRobot {
 			autoType = "CROSSBASELINE";
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
 			autoType = "MIDDLEGEAR";
+		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
+			autoType = "SHOOTRIGHT";
+		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_Y)) {
+			autoType = "LEFTGEAR";
 		}
 		
-		System.out.println("Autotype: " + autoType);
+		//System.out.println("Autotype: " + autoType);
 		
 	}
 
@@ -165,10 +180,13 @@ public class Robot extends IterativeRobot {
 			Scheduler.getInstance().add(new CrossBaseline());
 		} else if (autoType.equals("MIDDLEGEAR")) {
 			Scheduler.getInstance().add(new GearMiddlePeg());
+		} else if (autoType.equals("SHOOTRIGHT")) {
+			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
+		} else if (autoType.equals("LEFTGEAR")) {
+			Scheduler.getInstance().add(new CrossBaselineGearLeftPeg());
 		} else {
 			Scheduler.getInstance().add(new CrossBaseline());
 		}
-		
 		
 	}
 
@@ -177,6 +195,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
+		System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 	}
 
 	/**
@@ -203,28 +222,29 @@ public class Robot extends IterativeRobot {
 		//System.out.println(comms.getStatusMagnitude());
 		//System.out.println(comms.getStatusDirection();)
 		
-		/*int commsOutput = comms.getDirection();
-		if (commsOutput == 1) {
-			System.out.println("Vision Output: Move Right " + comms.getMagnitude());
-		} else if (commsOutput == 0) {
-			System.out.println("Vision Output: Don't Move");
-		} else if (commsOutput == -1) {
-			System.out.println("Vision Output: Move Left " + comms.getMagnitude());
-		} else {
-			System.out.println("No Contours");
-		}*/
+		
+//		int commsOutput = comms.getDirection(); //was comms.getDirection()
+//		if (commsOutput == 1) {
+//			System.out.println("Vision Output: Move Right " + comms.getMagnitude());
+//		} else if (commsOutput == 0) {
+//			System.out.println("Vision Output: Don't Move");
+//		} else if (commsOutput == -1) {
+//			System.out.println("Vision Output: Move Left " + comms.getMagnitude());
+//		} else {
+//			System.out.println("No Contours");
+//		}
 		
 		/*
 		//System.out.println("holding angle: " + driveTrain.isHoldingAngle);
 		 */
 		//System.out.println("RPM:" + shooter.getRPM());
-		/*
-		*/SmartDashboard.putNumber("RPM", shooter.getRPM());/*
+		
+		//SmartDashboard.putNumber("RPM", shooter.getRPM());
 		SmartDashboard.putNumber("targetAngle", driveTrain.getTargetAngle());
 		SmartDashboard.putNumber("idk", driveTrain.getAngle());
 		
 		//System.out.println("RPM:" + shooter.getRPM()); // Print shooter RPM
-		 */
+		 
 	}
 
 	/**

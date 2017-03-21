@@ -2,7 +2,6 @@ package org.metrobots.commands.auto;
 
 import org.metrobots.Robot;
 
-import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

@@ -1,29 +1,31 @@
 package org.metrobots.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearRod extends Subsystem {
 
-	//public static smth smthelse;
+	public DoubleSolenoid pusher;
 	
-	//public GearRod(smth smthelse) {
-		//super("GearRod", Constants); //super() calls the parent constructor
-	
-	
-		//smthelse = smthclose;
-	//}
-	
-
+	public GearRod(DoubleSolenoid pusherCylinder) {
+		pusher = pusherCylinder;
+	}
 	
 	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
+	protected void initDefaultCommand() {}
+	
+	public void ejectGear() {
+		pusher.set(DoubleSolenoid.Value.kForward);
+	}
+	
+	public void disablePusher() {
+		pusher.set(DoubleSolenoid.Value.kOff);
+	}
+	
+	public void unejectGear() {
+		pusher.set(DoubleSolenoid.Value.kReverse);
 	}
 
-	public void enable() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void enable() {}
 
 }

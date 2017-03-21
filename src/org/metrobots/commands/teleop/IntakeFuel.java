@@ -35,7 +35,13 @@ public class IntakeFuel extends Command {
 	 * <b>Right Bumper</b>: scrounge
 	 */
 	public void execute() {
-		scrounger.intake(gamepad.getButton(MetroGamepad.LB));
+		if (gamepad.getButton(MetroGamepad.LB)) {
+			scrounger.intake(-1);
+		} else if (gamepad.getAxis(MetroGamepad.LT) > 0.1) {
+			scrounger.intake(1);
+		} else {
+			scrounger.intake(0);
+		}
 	}
 
 	@Override

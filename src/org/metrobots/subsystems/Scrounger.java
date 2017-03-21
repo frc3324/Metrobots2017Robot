@@ -31,12 +31,8 @@ public class Scrounger extends Subsystem {
 	 *            boolean which tells robot whether or not it should eat fuel
 	 *            from the ground
 	 */
-	public void intake(boolean in) {
-		if (in) {
-			scrounger.set(-1.0);
-		} else {
-			scrounger.set(0);
-		}
+	public void intake(double in) {
+		scrounger.set(in);
 	}
 
 	/*

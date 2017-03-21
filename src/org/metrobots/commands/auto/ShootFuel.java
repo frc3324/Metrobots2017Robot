@@ -1,6 +1,5 @@
 package org.metrobots.commands.auto;
 
-import org.metrobots.Constants;
 import org.metrobots.Robot;
 import org.metrobots.subsystems.Shooter;
 
@@ -27,9 +26,9 @@ public class ShootFuel extends Command{
 	
 	@Override
 	protected void execute() {
-		Shooter.flywheel.set(Constants.keyShootingRPM);
+		Shooter.flywheel.set(speed);
 		Shooter.feeder.set(-1.0);
-		Shooter.agitator.set(0.5);
+		Shooter.agitator.set(1.0);
 		// TODO Auto-generated method stub
 	}
 	
