@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run(); // Run scheduler
 		System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 	}
-
+	
 	/**
 	 * Initialize whatever you need to when the robot starts teleop
 	 */

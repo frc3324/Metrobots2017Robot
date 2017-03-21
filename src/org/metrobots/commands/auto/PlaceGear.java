@@ -13,7 +13,7 @@ public class PlaceGear extends Command {
 	public PlaceGear() {
 		requires((Subsystem) Robot.driveTrain);
 	}
-
+	
 	@Override
 	protected void initialize() {
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
@@ -56,7 +56,7 @@ public class PlaceGear extends Command {
 		}
 
 	}
-
+	
 	@Override
 	protected boolean isFinished() {
 		if (lastVisionDirection == 0 && lastVisionMagnitude == 0) {
@@ -71,5 +71,5 @@ public class PlaceGear extends Command {
 
 	@Override
 	protected void interrupted() {}
-
+	
 }

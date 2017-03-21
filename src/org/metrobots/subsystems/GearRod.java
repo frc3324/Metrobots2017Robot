@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GearRod extends Subsystem {
-
+	
 	public DoubleSolenoid pusher;
 	
 	public GearRod(DoubleSolenoid pusherCylinder) {
