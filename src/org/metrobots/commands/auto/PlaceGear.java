@@ -33,12 +33,12 @@ public class PlaceGear extends Command {
 			visionMagnitude = Robot.comms.getMagnitude();
 			
 			if (visionDirection != 0) {
-				Robot.driveTrain.mecanumDrive(-0.5 * visionDirection, 0, 0); // Strafe dependent on peg location
+				Robot.driveTrain.mecanumDrive(0.4 * visionDirection, 0, 0); // Strafe dependent on peg location
 			} else {
 				if (visionMagnitude == 3) { // forward fast speed
-					visionSpeed = 0.75;
-				} else if (visionMagnitude == 2) { // forward medium speed
 					visionSpeed = 0.5;
+				} else if (visionMagnitude == 2) { // forward medium speed
+					visionSpeed = 0.3;
 				} else if (visionMagnitude == 1) { // forward low speed
 					visionSpeed = 0.25;
 				} else { // don't move
