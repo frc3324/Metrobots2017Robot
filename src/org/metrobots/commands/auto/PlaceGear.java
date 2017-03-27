@@ -78,9 +78,11 @@ public class PlaceGear extends Command {
 	@Override
 	protected boolean isFinished() {
 		try {
-			if (Math.abs(visionY) < 20 && Math.abs(lastVisionY) < 20 && Math.abs(Robot.comms.getYOffset()) < 20) {
+			if (Math.abs(visionY) <= 20 && Math.abs(lastVisionY) <= 20) {
 				return true;
-			}			
+			} else {
+				return false;
+			}
 		} catch (Exception e) {
 			
 		}

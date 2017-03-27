@@ -6,7 +6,9 @@ import org.metrobots.botcv.communication.CommInterface;
 import org.metrobots.commands.DriveGroup;
 import org.metrobots.commands.auto.modes.CrossBaseline;
 import org.metrobots.commands.auto.modes.CrossBaselineGearLeftPeg;
+import org.metrobots.commands.auto.modes.GearLeftPeg;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
+import org.metrobots.commands.auto.modes.GearRightPeg;
 import org.metrobots.commands.auto.modes.ShootFuelRightCrossBaseline;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
@@ -165,12 +167,16 @@ public class Robot extends IterativeRobot {
 			autoType = "SHOOTRIGHT";
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_Y)) {
 			autoType = "LEFTGEAR";
+		} else if (motionGamepad.getButton(MetroGamepad.LB)) {
+			autoType = "MIDDLEGEARVISION";
+		} else if (motionGamepad.getButton(MetroGamepad.RB)) {
+			autoType = "RIGHTGEAR";
 		}
 		
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
 		
-		//System.out.println("Autotype: " + autoType);
+		System.out.println("Autotype: " + autoType);
 		
 	}
 
@@ -189,7 +195,11 @@ public class Robot extends IterativeRobot {
 		} else if (autoType.equals("SHOOTRIGHT")) {
 			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
 		} else if (autoType.equals("LEFTGEAR")) {
-			Scheduler.getInstance().add(new CrossBaselineGearLeftPeg());
+			Scheduler.getInstance().add(new GearLeftPeg());
+		} else if (autoType.equals("MIDDLEGEARVISION")) {
+			Scheduler.getInstance().add(new GearMiddlePeg());
+		} else if (autoType.equals("RIGHTGEAR")) {
+			Scheduler.getInstance().add(new GearRightPeg());
 		} else {
 			Scheduler.getInstance().add(new CrossBaseline());
 		}

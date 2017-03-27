@@ -6,23 +6,18 @@ import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ZeroTurn extends Command {
+public class Pause extends Command {
 	
-	private float turnAngle;
+	private double seconds;
 	public double startTime, passedTime;
 
-	public ZeroTurn(float angle, double speed) {
-		requires((Subsystem) Robot.driveTrain);
-		this.turnAngle = angle;
+	public Pause(double seconds) {
+		this.seconds = seconds;
 	}
 
 	@Override
 	protected void initialize() {
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
-		Robot.driveTrain.resetGyro();
-		Robot.driveTrain.resetHoldAngle();
-		Robot.driveTrain.setIsHoldingAngle(true);
-		Robot.driveTrain.setTargetAngle(turnAngle);
 		startTime = Utility.getFPGATime();
 		passedTime = 0;
 	}
@@ -35,7 +30,7 @@ public class ZeroTurn extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (Math.abs(Robot.driveTrain.getAngle() - turnAngle) < 10) {
+		if((passedTime / 1100000) > seconds) {
 			return true;
 		} else {
 			return false;
