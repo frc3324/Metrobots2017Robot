@@ -6,5 +6,7 @@ public interface CommInterface {
     int getFiringStatus();
     int getXStatus();
     int getMagnitude(); 
-    int getDirection(); 
+    int getDirection();
+    int getXOffset();
+    int getYOffset();
 }

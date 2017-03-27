@@ -132,7 +132,9 @@ public class Robot extends IterativeRobot {
 		try {
 			CallHandler callHandler = new CallHandler();
 			System.out.println(callHandler);
-			Client client = new Client("10.33.24.50", 5800, callHandler);
+			//Client client = new Client("127.0.0.1", 5800, callHandler);
+			Client client = new Client("192.168.42.129", 5800, callHandler);
+			
 			comms = (CommInterface) client.getGlobal(CommInterface.class);
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
@@ -165,6 +167,9 @@ public class Robot extends IterativeRobot {
 			autoType = "LEFTGEAR";
 		}
 		
+		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
+		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
+		
 		//System.out.println("Autotype: " + autoType);
 		
 	}
@@ -176,6 +181,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.setFieldOriented(true);
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
+		driveTrain.setBrakeMode(true);
 		if (autoType.equals("CROSSBASELINE")) {
 			Scheduler.getInstance().add(new CrossBaseline());
 		} else if (autoType.equals("MIDDLEGEAR")) {
@@ -195,7 +201,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
-		System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
+		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
+		System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
 	}
 	
 	/**
@@ -205,6 +212,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.setFieldOriented(true);
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
+		driveTrain.setBrakeMode(false);
 		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to
 		shooter.setTargetSpeed(0);
 		//Constants.kFlywheelSpeed = SmartDashboard.getNumber("flywheelspeed");

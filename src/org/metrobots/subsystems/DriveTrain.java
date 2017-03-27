@@ -190,6 +190,13 @@ public class DriveTrain extends Subsystem {
 		navx.reset();
 	}
 	
+	public void setBrakeMode(boolean isBrake) {
+		fl.enableBrakeMode(isBrake);
+		br.enableBrakeMode(isBrake);
+		fr.enableBrakeMode(isBrake);
+		br.enableBrakeMode(isBrake);
+	}
+	
 	/*public void visionGear() {
 		int visionDirection = org.metrobots.Robot.comms.getDirection();
 		int visionMagnitude = org.metrobots.Robot.comms.getMagnitude();

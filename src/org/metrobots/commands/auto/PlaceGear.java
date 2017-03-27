@@ -9,6 +9,8 @@ public class PlaceGear extends Command {
 
 	public int lastVisionDirection = 1;
 	public int lastVisionMagnitude = 1;
+	public int visionY;
+	public int lastVisionY = 50;
 
 	public PlaceGear() {
 		requires((Subsystem) Robot.driveTrain);
@@ -21,6 +23,7 @@ public class PlaceGear extends Command {
 		Robot.driveTrain.resetGyro();
 		Robot.driveTrain.resetHoldAngle();
 		Robot.driveTrain.setIsHoldingAngle(true);
+		Robot.driveTrain.setBrakeMode(true);
 
 	}
 
@@ -30,10 +33,23 @@ public class PlaceGear extends Command {
 		int visionMagnitude = 1;
 		try {
 			visionDirection = Robot.comms.getDirection();
+			visionY = Robot.comms.getYOffset();
 			visionMagnitude = Robot.comms.getMagnitude();
 			
-			if (visionDirection != 0) {
-				Robot.driveTrain.mecanumDrive(0.4 * visionDirection, 0, 0); // Strafe dependent on peg location
+			if (Math.abs(visionY) > 20) {
+				double val = ((double)visionY) / 200;
+				if (val > 0.4) {
+					val = 0.4;
+				} else if (val < -0.4) {
+					val = -0.4;
+				}
+				System.out.println("Strafe speed " + val);
+				Robot.driveTrain.mecanumDrive(val, 0, 0);
+			} else {
+				Robot.driveTrain.mecanumDrive(0, 0, 0);
+			}
+			/*if (visionDirection != 0) {
+				Robot.driveTrain.mecanumDrive(visionStrafe, 0, 0); // Strafe dependent on peg location
 			} else {
 				if (visionMagnitude == 3) { // forward fast speed
 					visionSpeed = 0.5;
@@ -44,11 +60,13 @@ public class PlaceGear extends Command {
 				} else { // don't move
 					visionSpeed = 0.0;
 				}
+				visionSpeed = 0.0;
 				Robot.driveTrain.mecanumDrive(0.0, -visionSpeed, 0.0);
-			}
+			}*/
 
 			lastVisionDirection = visionDirection;
 			lastVisionMagnitude = visionMagnitude;
+			lastVisionY = visionY;
 			
 		} catch (Exception e) {
 			System.out.println("Place Gear auto failed to get comms values: " + e.getMessage());
@@ -59,11 +77,14 @@ public class PlaceGear extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		if (lastVisionDirection == 0 && lastVisionMagnitude == 0) {
-			return true;
-		} else {
-			return false;
+		try {
+			if (Math.abs(visionY) < 20 && Math.abs(lastVisionY) < 20 && Math.abs(Robot.comms.getYOffset()) < 20) {
+				return true;
+			}			
+		} catch (Exception e) {
+			
 		}
+		return false;
 	}
 
 	@Override
