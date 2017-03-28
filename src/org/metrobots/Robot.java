@@ -161,22 +161,28 @@ public class Robot extends IterativeRobot {
 		
 		if (motionGamepad.getButton(MetroGamepad.BUTTON_A)) {
 			autoType = "CROSSBASELINE";
+			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
 			autoType = "MIDDLEGEAR";
+			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
 			autoType = "SHOOTRIGHT";
+			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_Y)) {
 			autoType = "LEFTGEAR";
+			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.LB)) {
 			autoType = "MIDDLEGEARVISION";
+			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.RB)) {
 			autoType = "RIGHTGEAR";
+			System.out.println("Autotype: " + autoType);
 		}
 		
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
 		
-		System.out.println("Autotype: " + autoType);
+		//System.out.println("Autotype: " + autoType);
 		
 	}
 

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearRightPeg extends CommandGroup {
 	public GearRightPeg() {
-		this.addSequential(new DriveForward(-0.25, 2.3));
+		this.addSequential(new DriveForward(-0.25, 2.1));
 		this.addSequential(new Pause(0.15));
 		this.addSequential(new ZeroTurn(-60, 0.5));
 		this.addSequential(new Pause(0.5));
