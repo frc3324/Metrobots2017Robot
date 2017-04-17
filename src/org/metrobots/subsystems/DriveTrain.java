@@ -192,9 +192,13 @@ public class DriveTrain extends Subsystem {
 	
 	public void setBrakeMode(boolean isBrake) {
 		fl.enableBrakeMode(isBrake);
-		br.enableBrakeMode(isBrake);
+		bl.enableBrakeMode(isBrake);
 		fr.enableBrakeMode(isBrake);
 		br.enableBrakeMode(isBrake);
+	}
+	
+	public void setHoldAngleP(double turnP) {
+		Constants.kDriveHoldAngleP = turnP;
 	}
 	
 	/*public void visionGear() {

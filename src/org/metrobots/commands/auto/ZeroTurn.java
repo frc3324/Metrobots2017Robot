@@ -23,6 +23,7 @@ public class ZeroTurn extends Command {
 		Robot.driveTrain.resetHoldAngle();
 		Robot.driveTrain.setIsHoldingAngle(true);
 		Robot.driveTrain.setTargetAngle(turnAngle);
+		Robot.driveTrain.setHoldAngleP(0.01);
 		startTime = Utility.getFPGATime();
 		passedTime = 0;
 	}
@@ -43,7 +44,9 @@ public class ZeroTurn extends Command {
 	}
 
 	@Override
-	protected void end() {}
+	protected void end() {
+		Robot.driveTrain.setHoldAngleP(0.005);
+	}
 
 	@Override
 	protected void interrupted() {}

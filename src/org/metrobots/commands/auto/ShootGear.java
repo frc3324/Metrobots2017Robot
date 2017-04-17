@@ -16,15 +16,13 @@ public class ShootGear extends Command {
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		Robot.driveTrain.mecanumDrive(0, 0, 0);
-		Robot.driveTrain.setFieldOriented(false);
-		Robot.driveTrain.resetGyro();
-		Robot.driveTrain.resetHoldAngle();
-		
 	}
 	
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
+		Robot.gearMech.ejectGear();
+		Robot.gearMech.unejectGear();
 	}
 
 	@Override

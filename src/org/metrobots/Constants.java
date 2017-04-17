@@ -39,6 +39,15 @@ public class Constants {
 	 */
 	public final static int opticalEncoderPort = 0; // Analog
 	public final static SPI.Port navxPort = SPI.Port.kMXP;
+	public final static int flEncoder1 = 0;
+	public final static int flEncoder2 = 1;
+	public final static int blEncoder1 = 2;
+	public final static int blEncoder2 = 3;
+	public final static int frEncoder1 = 4;
+	public final static int frEncoder2 = 5;
+	public final static int brEncoder1 = 6;
+	public final static int brEncoder2 = 7;
+	
 
 	/*
 	 * Driver station ports
@@ -64,7 +73,7 @@ public class Constants {
 	/*
 	 * DriveTrain variables
 	 */
-	public final static double kDriveHoldAngleP = 0.005;
+	public static double kDriveHoldAngleP = 0.007;
 	public final static double driveTrainAngleDeadband = 3;
 
 }

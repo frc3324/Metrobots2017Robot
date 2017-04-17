@@ -23,6 +23,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -47,7 +48,9 @@ public class Robot extends IterativeRobot {
 	public static MetroGamepad motionGamepad;
 	public static MetroGamepad mechanismGamepad;
 	public static CommInterface comms;
-
+	
+	public static boolean noVComms = false;
+	
 	/*
 	 * Declare CANTalon (TalonSRX) objects
 	 */
@@ -66,6 +69,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public OpticalEncoder shooterEncoder;
 	public static AHRS navx;
+	public Encoder flEncoder;
+	public Encoder blEncoder;
+	public Encoder frEncoder;
+	public Encoder brEncoder;
 	
 	/*
 	 * Declare Pnuematic jazz
@@ -113,6 +120,7 @@ public class Robot extends IterativeRobot {
 		 */
 		compressor = new Compressor(0);
 		compressor.setClosedLoopControl(true);
+		
 		gearPusher = new DoubleSolenoid(Constants.gearPushPort, Constants.gearPullPort);
 
 		/*
@@ -120,6 +128,11 @@ public class Robot extends IterativeRobot {
 		 */
 		shooterEncoder = new OpticalEncoder(Constants.opticalEncoderPort);
 		navx = new AHRS(Constants.navxPort);
+		
+		flEncoder = new Encoder(Constants.flEncoder1, Constants.flEncoder2);
+		blEncoder = new Encoder(Constants.blEncoder1, Constants.blEncoder2);
+		frEncoder = new Encoder(Constants.frEncoder1, Constants.frEncoder2);
+		brEncoder = new Encoder(Constants.brEncoder1, Constants.brEncoder2);
 
 		/*
 		 * Initialize subsystems
@@ -141,6 +154,7 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
 			e.printStackTrace();
+			noVComms = true;
 		}
 		
 
@@ -163,7 +177,7 @@ public class Robot extends IterativeRobot {
 			autoType = "CROSSBASELINE";
 			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
-			autoType = "MIDDLEGEAR";
+			autoType = "MIDDLEGEARVISION";
 			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
 			autoType = "SHOOTRIGHT";
@@ -178,6 +192,11 @@ public class Robot extends IterativeRobot {
 			autoType = "RIGHTGEAR";
 			System.out.println("Autotype: " + autoType);
 		}
+		
+		/*System.out.println("flE:" + flEncoder.getDistance());
+		System.out.println("blE:" + blEncoder.getDistance());
+		System.out.println("frE:" + frEncoder.getDistance());
+		System.out.println("brE:" + brEncoder.getDistance());*/
 		
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
@@ -218,7 +237,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run(); // Run scheduler
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
-		System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
+		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
 	}
 	
 	/**
@@ -226,7 +245,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopInit() {
 		driveTrain.setFieldOriented(true);
-		driveTrain.setIsHoldingAngle(true);
+		driveTrain.setIsHoldingAngle(false);
 		driveTrain.resetHoldAngle();
 		driveTrain.setBrakeMode(false);
 		Scheduler.getInstance().add(new DriveGroup()); // Add DriveGroup to

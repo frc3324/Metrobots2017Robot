@@ -2,18 +2,22 @@ package org.metrobots.commands.auto;
 
 import org.metrobots.Robot;
 
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class PlaceGear extends Command {
+public class PlaceGearTime extends Command {
 
 	public int lastVisionDirection = 1;
 	public int lastVisionMagnitude = 1;
 	public int visionY;
 	public int lastVisionY = 50;
+	public double startTime, passedTime;
+	public double driveTime;
 
-	public PlaceGear() {
+	public PlaceGearTime(double maxTime) {
 		requires((Subsystem) Robot.driveTrain);
+		driveTime = maxTime;
 	}
 	
 	@Override
@@ -24,10 +28,13 @@ public class PlaceGear extends Command {
 		Robot.driveTrain.resetHoldAngle();
 		Robot.driveTrain.setIsHoldingAngle(true);
 		Robot.driveTrain.setBrakeMode(true);
+		startTime = Utility.getFPGATime();
+		passedTime = 0;
 
 	}
 
 	protected void execute() {
+		passedTime = Utility.getFPGATime() - startTime;
 		double visionSpeed = 0.0;
 		int visionDirection = 1;
 		int visionMagnitude = 1;
@@ -36,8 +43,8 @@ public class PlaceGear extends Command {
 			visionY = Robot.comms.getYOffset();
 			visionMagnitude = Robot.comms.getMagnitude();
 			
-			if (Math.abs(visionY) > 10) {
-				double val = ((double)visionY) / 100;
+			if (Math.abs(visionY) > 20) {
+				double val = ((double)visionY) / 130;
 				if (val > 0.4) {
 					val = 0.4;
 				} else if (val < -0.4) {
@@ -67,6 +74,7 @@ public class PlaceGear extends Command {
 			lastVisionDirection = visionDirection;
 			lastVisionMagnitude = visionMagnitude;
 			lastVisionY = visionY;
+			System.out.println("Hi");
 			
 		} catch (Exception e) {
 			System.out.println("Place Gear auto failed to get comms values: " + e.getMessage());
@@ -78,18 +86,22 @@ public class PlaceGear extends Command {
 	@Override
 	protected boolean isFinished() {
 		if(Robot.noVComms){
+			
 			return true;
 		}
 		try {
 			if (Math.abs(visionY) <= 20 && Math.abs(lastVisionY) <= 20) {
 				return true;
+			} else if((passedTime / 1100000) > driveTime) {
+				System.out.println("Gear placement timed out.");
+				return true;
 			} else {
 				return false;
 			}
 		} catch (Exception e) {
-			
+			return false;
 		}
-		return false;
+		
 	}
 
 	@Override
