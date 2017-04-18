@@ -47,7 +47,10 @@ public class Constants {
 	public final static int frEncoder2 = 5;
 	public final static int brEncoder1 = 6;
 	public final static int brEncoder2 = 7;
-	
+	public final static int shooterEncoder1 = 10; // Pin 0 on MXP theoretically
+	public final static int shooterEncoder2 = 11; // Pin 1 on MXP
+	public final static int ultrasonicOut = 8;
+	public final static int ultrasonicIn = 9;
 
 	/*
 	 * Driver station ports

@@ -3,6 +3,7 @@ package org.metrobots.subsystems;
 import org.metrobots.Constants;
 import org.metrobots.util.OpticalEncoder;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -24,7 +25,8 @@ public class Shooter extends PIDSubsystem {
 	public static SpeedController flywheel;
 	public static SpeedController feeder;
 	public static SpeedController agitator;
-	public static OpticalEncoder encoder;
+	public static OpticalEncoder oEncoder;
+	public static Encoder encoder;
 	public double scaler = 0.002;
 	
 
@@ -46,16 +48,30 @@ public class Shooter extends PIDSubsystem {
 		getPIDController().setContinuous(false); // Make the PID not continuous
 		getPIDController().enable();
 		getPIDController().setOutputRange(0, 10000); // Tells PID Controller never to reverse the flywheel
-		
+	
 		/*
 		 * Initialize objects for shooter based off of the objects passed from robot
 		 */
 		flywheel = flywheelMotor;
 		feeder = feederMotor;
 		agitator = agitatorMotor;
-		encoder = opticalEncoder;
+		oEncoder = opticalEncoder;
 	}
-
+	public Shooter(SpeedController flywheelMotor, SpeedController feederMotor, SpeedController agitatorMotor, Encoder encoder) {
+		super("Shooter" , Constants.kShooterP, Constants.kShooterI, Constants.kShooterD);
+		setAbsoluteTolerance(Constants.kShooterTolerance); // Set tolerance for the flywheel PID
+		getPIDController().setContinuous(false); // Make the PID not continuous
+		getPIDController().enable();
+		getPIDController().setOutputRange(0, 10000); // Tells PID Controller never to reverse the flywheel
+	
+		/*
+		 * Initialize objects for shooter based off of the objects passed from robot
+		 */
+		flywheel = flywheelMotor;
+		feeder = feederMotor;
+		agitator = agitatorMotor;
+		this.encoder = encoder;
+	}
 	/**
 	 * Feeds fuel into shooter
 	 * 
@@ -113,7 +129,11 @@ public class Shooter extends PIDSubsystem {
 	 * @return shooter RPM
 	 */
 	public double getRPM() {
-		return encoder.getRPM();
+		if (encoder == null) {
+			return oEncoder.getRPM();
+		} else {
+			return encoder.getRate();
+		}
 	}
 
 	/**
@@ -135,7 +155,7 @@ public class Shooter extends PIDSubsystem {
 	 */
 	@Override
 	public double returnPIDInput() {
-		return encoder.getRPM();
+		return getRPM();
 	}
 
 	/**

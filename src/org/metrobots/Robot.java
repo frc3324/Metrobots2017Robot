@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -73,6 +74,8 @@ public class Robot extends IterativeRobot {
 	public Encoder blEncoder;
 	public Encoder frEncoder;
 	public Encoder brEncoder;
+	public Encoder newShooterEncoder;
+	public Ultrasonic ultrasonic;
 	
 	/*
 	 * Declare Pnuematic jazz
@@ -133,14 +136,18 @@ public class Robot extends IterativeRobot {
 		blEncoder = new Encoder(Constants.blEncoder1, Constants.blEncoder2);
 		frEncoder = new Encoder(Constants.frEncoder1, Constants.frEncoder2);
 		brEncoder = new Encoder(Constants.brEncoder1, Constants.brEncoder2);
-
+		newShooterEncoder = new Encoder(Constants.shooterEncoder1, Constants.shooterEncoder2);
+		ultrasonic = new Ultrasonic(Constants.ultrasonicOut, Constants.ultrasonicIn);
+		ultrasonic.setEnabled(true);
+		ultrasonic.setAutomaticMode(true);
+		
 		/*
 		 * Initialize subsystems
 		 */
 		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx);
 		intake = new Scrounger(intakeMotor);
 		climber = new Climber(climbMotor);
-		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
+		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, newShooterEncoder);
 		gearMech = new GearRod(gearPusher);
 		
 		
@@ -192,6 +199,8 @@ public class Robot extends IterativeRobot {
 			autoType = "RIGHTGEAR";
 			System.out.println("Autotype: " + autoType);
 		}
+		
+		System.out.println("Ultrasonic" + ultrasonic.getRangeInches());
 		
 		/*System.out.println("flE:" + flEncoder.getDistance());
 		System.out.println("blE:" + blEncoder.getDistance());
@@ -282,7 +291,7 @@ public class Robot extends IterativeRobot {
 		 */
 		//System.out.println("RPM:" + shooter.getRPM());
 		
-		//SmartDashboard.putNumber("RPM", shooter.getRPM());
+		SmartDashboard.putNumber("RPM", shooter.getRPM());
 		SmartDashboard.putNumber("targetAngle", driveTrain.getTargetAngle());
 		SmartDashboard.putNumber("idk", driveTrain.getAngle());
 		
