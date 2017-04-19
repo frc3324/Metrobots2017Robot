@@ -22,13 +22,12 @@ public class ShootGear extends Command {
 	protected void execute() {
 		// TODO Auto-generated method stub
 		Robot.gearMech.ejectGear();
-		Robot.gearMech.unejectGear();
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

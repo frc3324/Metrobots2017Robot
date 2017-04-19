@@ -7,8 +7,11 @@ import org.metrobots.commands.DriveGroup;
 import org.metrobots.commands.auto.modes.CrossBaseline;
 import org.metrobots.commands.auto.modes.CrossBaselineGearLeftPeg;
 import org.metrobots.commands.auto.modes.GearLeftPeg;
+import org.metrobots.commands.auto.modes.GearLeftPegEncoders;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
+import org.metrobots.commands.auto.modes.GearMiddlePegEncodersNoV;
 import org.metrobots.commands.auto.modes.GearRightPeg;
+import org.metrobots.commands.auto.modes.GearRightPegEncoders;
 import org.metrobots.commands.auto.modes.ShootFuelRightCrossBaseline;
 import org.metrobots.subsystems.Climber;
 import org.metrobots.subsystems.DriveTrain;
@@ -50,7 +53,7 @@ public class Robot extends IterativeRobot {
 	public static MetroGamepad mechanismGamepad;
 	public static CommInterface comms;
 	
-	public static boolean noVComms = false;
+	public static boolean noVComms = true;
 	
 	/*
 	 * Declare CANTalon (TalonSRX) objects
@@ -75,7 +78,7 @@ public class Robot extends IterativeRobot {
 	public Encoder frEncoder;
 	public Encoder brEncoder;
 	public Encoder newShooterEncoder;
-	public Ultrasonic ultrasonic;
+	public static Ultrasonic ultrasonic;
 	
 	/*
 	 * Declare Pnuematic jazz
@@ -144,7 +147,7 @@ public class Robot extends IterativeRobot {
 		/*
 		 * Initialize subsystems
 		 */
-		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx);
+		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx, flEncoder, blEncoder, frEncoder, brEncoder);
 		intake = new Scrounger(intakeMotor);
 		climber = new Climber(climbMotor);
 		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, newShooterEncoder);
@@ -184,7 +187,7 @@ public class Robot extends IterativeRobot {
 			autoType = "CROSSBASELINE";
 			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_B)) {
-			autoType = "MIDDLEGEARVISION";
+			autoType = "MIDDLEGEARNOV";
 			System.out.println("Autotype: " + autoType);
 		} else if (motionGamepad.getButton(MetroGamepad.BUTTON_X)) {
 			autoType = "SHOOTRIGHT";
@@ -200,12 +203,12 @@ public class Robot extends IterativeRobot {
 			System.out.println("Autotype: " + autoType);
 		}
 		
-		System.out.println("Ultrasonic" + ultrasonic.getRangeInches());
+		//System.out.println("Ultrasonic" + ultrasonic.getRangeInches());
 		
-		/*System.out.println("flE:" + flEncoder.getDistance());
+		System.out.println("flE:" + flEncoder.getDistance());
 		System.out.println("blE:" + blEncoder.getDistance());
 		System.out.println("frE:" + frEncoder.getDistance());
-		System.out.println("brE:" + brEncoder.getDistance());*/
+		System.out.println("brE:" + brEncoder.getDistance());
 		
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
@@ -222,6 +225,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.setIsHoldingAngle(true);
 		driveTrain.resetHoldAngle();
 		driveTrain.setBrakeMode(true);
+		gearMech.unejectGear();
 		if (autoType.equals("CROSSBASELINE")) {
 			Scheduler.getInstance().add(new CrossBaseline());
 		} else if (autoType.equals("MIDDLEGEAR")) {
@@ -229,11 +233,13 @@ public class Robot extends IterativeRobot {
 		} else if (autoType.equals("SHOOTRIGHT")) {
 			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
 		} else if (autoType.equals("LEFTGEAR")) {
-			Scheduler.getInstance().add(new GearLeftPeg());
+			Scheduler.getInstance().add(new GearLeftPegEncoders());
 		} else if (autoType.equals("MIDDLEGEARVISION")) {
 			Scheduler.getInstance().add(new GearMiddlePeg());
+		} else if (autoType.equals("MIDDLEGEARNOV")) {
+			Scheduler.getInstance().add(new GearMiddlePegEncodersNoV());
 		} else if (autoType.equals("RIGHTGEAR")) {
-			Scheduler.getInstance().add(new GearRightPeg());
+			Scheduler.getInstance().add(new GearRightPegEncoders());
 		} else {
 			Scheduler.getInstance().add(new CrossBaseline());
 		}

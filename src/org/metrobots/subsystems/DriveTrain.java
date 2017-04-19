@@ -5,6 +5,7 @@ import org.metrobots.Constants;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,6 +21,7 @@ public class DriveTrain extends Subsystem {
 
 	public CANTalon fl, bl, fr, br; //was static
 	public static AHRS navx;
+	public Encoder flE, blE, frE, brE;
 	
 	public boolean isFieldOriented;
 	public boolean isHoldingAngle;
@@ -49,6 +51,29 @@ public class DriveTrain extends Subsystem {
 		bl = blMotor;
 		fr = frMotor;
 		br = brMotor;
+		
+		/*fl.setInverted(true);
+		bl.setInverted(true);
+		fr.setInverted(false);
+		br.setInverted(false);*/
+
+		navx = navxSensor;
+		//navx.
+		
+		//drive = new RobotDrive(fl, bl, fr, br);
+	}
+	
+	public DriveTrain(CANTalon flMotor, CANTalon blMotor, CANTalon frMotor, CANTalon brMotor, AHRS navxSensor, Encoder flEncoder, Encoder blEncoder, Encoder frEncoder, Encoder brEncoder) {
+
+		fl = flMotor;
+		bl = blMotor;
+		fr = frMotor;
+		br = brMotor;
+		
+		flE = flEncoder;
+		blE = blEncoder;
+		frE = frEncoder;
+		brE = brEncoder;
 		
 		/*fl.setInverted(true);
 		bl.setInverted(true);
@@ -199,6 +224,21 @@ public class DriveTrain extends Subsystem {
 	
 	public void setHoldAngleP(double turnP) {
 		Constants.kDriveHoldAngleP = turnP;
+	}
+	
+	public double getAverageDistance() {
+		return (flE.getDistance() + blE.getDistance() + frE.getDistance() + brE.getDistance())/4;
+	}
+	
+	public double getDistanceAbs() {
+		return (Math.abs(flE.getDistance()) + Math.abs(blE.getDistance()) + Math.abs(frE.getDistance()) + Math.abs(brE.getDistance()))/4;
+	}
+	
+	public void resetEncoder() {
+		flE.reset();
+		blE.reset();
+		frE.reset();
+		brE.reset();
 	}
 	
 	/*public void visionGear() {
