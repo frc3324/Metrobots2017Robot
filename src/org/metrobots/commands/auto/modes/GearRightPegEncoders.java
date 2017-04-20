@@ -23,7 +23,8 @@ public class GearRightPegEncoders extends CommandGroup {
 		this.addSequential(new Brake(true));
 		this.addSequential(new Pause(0.25));
 		this.addSequential(new ShootGear());
-		this.addSequential(new DriveForward(0.5, .5));
+		this.addParallel(new Pause(0.5));
+		this.addSequential(new DriveForward(0.5, 0.5));
 		this.addSequential(new Pause(0.5));
 		this.addSequential(new ZeroTurn(60, 0.5));
 		this.addSequential(new Pause(0.5));

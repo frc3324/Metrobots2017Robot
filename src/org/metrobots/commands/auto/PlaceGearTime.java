@@ -42,6 +42,7 @@ public class PlaceGearTime extends Command {
 			try {
 				visionDirection = Robot.comms.getDirection();
 				visionY = Robot.comms.getYOffset();
+				System.out.println("visionY: " + Robot.comms.getYOffset());
 				visionMagnitude = Robot.comms.getMagnitude();
 				
 				if (Math.abs(visionY) > 20) {
@@ -75,7 +76,6 @@ public class PlaceGearTime extends Command {
 				lastVisionDirection = visionDirection;
 				lastVisionMagnitude = visionMagnitude;
 				lastVisionY = visionY;
-				System.out.println("Hi");
 				
 			} catch (Exception e) {
 				System.out.println("Place Gear auto failed to get comms values: " + e.getMessage());

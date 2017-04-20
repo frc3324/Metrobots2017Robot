@@ -2,32 +2,42 @@ package org.metrobots.commands.auto;
 
 import org.metrobots.Robot;
 
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShootGear extends Command {
-	
+
+	public double startTime, passedTime;
 	
 	public ShootGear() {
-		requires((Subsystem) Robot.driveTrain);
+		requires((Subsystem) Robot.gearMech);
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		Robot.driveTrain.mecanumDrive(0, 0, 0);
+		startTime = Utility.getFPGATime();
+		passedTime = 0;
 	}
 	
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		Robot.gearMech.ejectGear();
+		passedTime = Utility.getFPGATime() - startTime;
+		if((passedTime / 1100000) < 1.5) {
+			Robot.gearMech.ejectGear();
+		} else {
+			Robot.gearMech.unejectGear();
+		}
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return true;
+		if((passedTime / 1100000) >= 1.5) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

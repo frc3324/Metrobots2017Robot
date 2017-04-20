@@ -161,6 +161,7 @@ public class Robot extends IterativeRobot {
 			Client client = new Client("192.168.42.129", 5800, callHandler);
 			
 			comms = (CommInterface) client.getGlobal(CommInterface.class);
+			noVComms = false;
 		} catch (IOException e) {
 			System.err.println("Could not establish communications with tablet!");
 			e.printStackTrace();
@@ -205,10 +206,10 @@ public class Robot extends IterativeRobot {
 		
 		//System.out.println("Ultrasonic" + ultrasonic.getRangeInches());
 		
-		System.out.println("flE:" + flEncoder.getDistance());
+		/*System.out.println("flE:" + flEncoder.getDistance());
 		System.out.println("blE:" + blEncoder.getDistance());
 		System.out.println("frE:" + frEncoder.getDistance());
-		System.out.println("brE:" + brEncoder.getDistance());
+		System.out.println("brE:" + brEncoder.getDistance());*/
 		
 		//System.out.println("dir: " + comms.getDirection() + " mag:" + comms.getMagnitude());
 		//System.out.println("x: " + comms.getXOffset() + " y:" + comms.getYOffset());
