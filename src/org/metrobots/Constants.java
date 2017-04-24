@@ -68,6 +68,7 @@ public class Constants {
 	public final static double kShooterTolerance = 0.1;
 	public final static double maxShooterRPM = 5675.0;
 	public final static int keyShootingRPM = 4000;
+	public static int airshipShootingRPM = 4500;
 	public final static int opticalEncoderLow = 0;
 	public final static int opticalEncoderHigh = 2000;
 	public static double kFlywheelSpeed = 0.8;

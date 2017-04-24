@@ -8,6 +8,7 @@ import org.metrobots.commands.auto.modes.CrossBaseline;
 import org.metrobots.commands.auto.modes.CrossBaselineGearLeftPeg;
 import org.metrobots.commands.auto.modes.GearLeftPeg;
 import org.metrobots.commands.auto.modes.GearLeftPegEncoders;
+import org.metrobots.commands.auto.modes.GearLeftPegShootFuel;
 import org.metrobots.commands.auto.modes.GearMiddlePeg;
 import org.metrobots.commands.auto.modes.GearMiddlePegEncodersNoV;
 import org.metrobots.commands.auto.modes.GearRightPeg;
@@ -150,7 +151,7 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain(flMotor, blMotor, frMotor, brMotor, navx, flEncoder, blEncoder, frEncoder, brEncoder);
 		intake = new Scrounger(intakeMotor);
 		climber = new Climber(climbMotor);
-		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, newShooterEncoder);
+		shooter = new Shooter(launchMotor, feederMotor, agitatorMotor, shooterEncoder);
 		gearMech = new GearRod(gearPusher);
 		
 		
@@ -234,7 +235,7 @@ public class Robot extends IterativeRobot {
 		} else if (autoType.equals("SHOOTRIGHT")) {
 			Scheduler.getInstance().add(new ShootFuelRightCrossBaseline());
 		} else if (autoType.equals("LEFTGEAR")) {
-			Scheduler.getInstance().add(new GearLeftPegEncoders());
+			Scheduler.getInstance().add(new GearLeftPegShootFuel());
 		} else if (autoType.equals("MIDDLEGEARVISION")) {
 			Scheduler.getInstance().add(new GearMiddlePeg());
 		} else if (autoType.equals("MIDDLEGEARNOV")) {

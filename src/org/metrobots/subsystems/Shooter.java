@@ -27,6 +27,7 @@ public class Shooter extends PIDSubsystem {
 	public static SpeedController agitator;
 	public static OpticalEncoder oEncoder;
 	public static Encoder encoder;
+	public static double speed;
 	public double scaler = 0.002;
 	
 
@@ -112,6 +113,8 @@ public class Shooter extends PIDSubsystem {
 	 */
 	public void setTargetSpeed(int targetRPM) {
 		getPIDController().setSetpoint(targetRPM);
+		speed = targetRPM;
+		//flywheel.set(targetRPM/Constants.maxShooterRPM);
 	}
 
 	/**
@@ -168,7 +171,7 @@ public class Shooter extends PIDSubsystem {
 	 */
 	public void usePIDOutput(double output) {
 		if (getTargetSpeed() != 0) {
-			flywheel.set(output / Constants.maxShooterRPM);
+			flywheel.set(speed / Constants.maxShooterRPM);
 		} else {
 			flywheel.set(0);
 		}
